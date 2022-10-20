@@ -7,12 +7,49 @@ body {
     background-color: rgb(15, 14, 15);
 }
 
+/*.Top-Content {
+    display: flex;
+}
+
+.right {
+    display:flex;
+}
+
+
+.IDE-Name {
+    font-size: 16px;
+    font-weight: bold;
+}
+*/
+.toppart {
+    display: flex;
+}
+.Name {
+    text-align: center;
+    margin-right: 600px;
+}
+
+.SIGN {
+    display:block;
+    text-align: right;
+}
+.up {
+    margin-left: 15px;
+}
+a {
+    color:rgb(255, 226, 250);
+}
+
+.SIGN a:hover, .SIGN a.active {
+	color:#6feeff;
+
+}
+
 .container-top {
     display: flex;
-    justify-content: center;
-    background-color: rgb(20, 15, 19);
-
-    padding: 10px;
+    justify-content: flex-end;
+    background-color: #271D28;
+    padding: 15px;
 }
 
 .main1 {
@@ -22,15 +59,17 @@ body {
 
 .main2 {
     display: flex;
-    height: 765px;
+    height: 744px;
 }
 
 .sidebuttons-container {
     display: flex;
     text-align: center;
-    background-color: rgb(20, 15, 19);
-    flex: 0.4;
+    background-color: #271D28;
+    flex: 0.5;
     flex-direction: column;
+    border-right: 2.5px solid #000000;
+
 
 }
 
@@ -44,33 +83,115 @@ body {
 }
 
 .filespart {
-    flex: 1.45;
+    flex: 1.8;
+    border-top: 2.5px solid #000000;
+    border-bottom: 2.5px solid #000000;
+    border-right: 2.5px solid #000000;
     text-align: center;
-    background-color: rgb(27, 22, 26);
+    background-color: #3B2D3D;
+}
+
+.MyFiles {
+    border-bottom: 2.5px solid black;
+    padding: 15px;
+    font-size: 20px;
+    background-color: #271D28;
 }
 
 .code {
     flex: 4;
-    text-align: center;
-    background-color: rgb(31, 25, 30);
+    text-align: left;
+    color:#6feeff;
+    padding: 10px 10px;
+    border-top: 2.5px solid #000000;
+    border-bottom: 2.5px solid #000000;
+    border-right: 2.5px solid #000000;
+    background-color: #554A56;
+}
+
+
+.console-container {
+    flex: 3;
+    border-top: 2.5px solid #000000;
+    border-bottom: 2.5px solid #000000;
+    background-color: #1d1a1d;
 }
 
 .console {
-    flex: 3;
+    background-color: #1d1a1d;
+    width: 469px;
+    color:rgb(81, 255, 0);
+    height: 690px;
+}
+
+.header-console {
     text-align: center;
-    background-color: rgb(26, 19, 24);
+    border-bottom: 2.5px solid black;
+    padding: 10px 15px;
+    font-size: 20px;
+    background-color: #271D28;
 }
 
 .footer {
     flex-shrink: 0;
     background-color: green;
     display: flex;
-    justify-content: center;
-    background-color: rgb(20, 15, 19);
+    justify-content: flex-end;
+    background-color: #271D28;
 
-    padding: 9.5px;
+    padding: 15px;
 }
 
 .bottompart {
 
 }
+
+#zatemnenie {
+    background-color:#1d1a1d73;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#okno {
+    width: 500px;
+    height: 500px;
+    text-align: center;
+    padding: 15px;
+    border: 3px solid black;
+    border-radius: 10px;
+    color:aliceblue;
+    position:absolute;
+    top: 0;
+    right:0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    background-color: #554A56;
+}
+
+#zatemnenie:target {
+    display: block
+}
+
+.close {
+    display: inline-block;
+    color:antiquewhite;
+    padding: 0 12px;
+    margin: 10px;
+    text-decoration: none;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.close:hover {
+    background: #6feeff;
+}
+
+
+
+
+

@@ -9,23 +9,43 @@
 </head>
 <body>
 
+    <div id="zatemnenie">
+        <div id="okno">
+            Всплывающее окно <br>
+            <a href="#" class="close">X</a>
+        </div>
+    </div>
 
     <header class="container-top">
         <div class="toppart">
-            <div>
-                <div>IDE name (+ others features)</div>
+           <!-- <div>
+                <div class="Top-Content">
+                    <div class="IDE-Name">NUCLEAR</div>
+                    <span class="right">
+                        <div class="SignIn">Sign In</div>
+                        <div class="SignUp">Sign Up</div>
+                    </span>
+                </div>
             </div>
+        -->
+            <div class="Name">NUCLEAR</div>
+            <div class="SIGN">
+                <a href="#zatemnenie" class="in">Sign In</a>
+                <a href="#zatemnenie" class="up">Sign Up</a>
+            </div>
+
         </div>
     </header>
 
+    
 
-    <nav class="main1">
+    <main class="main1">
         <div class="main2">
             <div class="sidebuttons-container">
 
 
                     <div class="headerTextSideButtons">
-                        <div>Side buttons</div>
+                        <div></div>
                     </div>
 
                     <div class="buttons-container">
@@ -41,24 +61,32 @@
 
             <div class="filespart">
                 <div>
-                    <div>Folder / files / drafts</div>
+                    <div class="MyFiles">My files:</div>
                 </div>
             </div>
 
-            <div class="code">
-                <div>
-                    <div>Coding here</div>
-                </div>
-            </div>
+            <textarea class="code">
 
-            <div class="console">
-                <div>
-                    <div>Console</div>
+            </textarea>
+
+            <div class="console-container">
+                <div class="header-console">
+                    Console
                 </div>
+
+                <textarea class="console" readonly>
+
+                </textarea>
+
             </div>
+           <!--<div class="console-container">
+                <div>
+                    <div class="console">Console</div>
+                </div>
+            </div>-->
 
         </div>
-    </nav>
+    </main>
 
 
     <footer class="footer">
@@ -68,7 +96,7 @@
             </div>
         </div>
     </footer>
-    
+
 
 </body>
 </html>
