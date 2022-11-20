@@ -135,6 +135,17 @@ a {
     background-color: #1d1a1d;
 }
 
+.RUN {
+    color:#6feeff;
+    margin-left: -10px;
+    margin-right: 165px;
+    padding: 3px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 2px solid #6feeff;
+    background-color: black;
+}
+
 .console {
     background-color: #1d1a1d;
     width: 469px;
@@ -145,7 +156,7 @@ a {
 }
 
 .header-console {
-    text-align: center;
+    text-align: left;
     border-bottom: 2.5px solid black;
     padding: 10px 15px;
     font-size: 20px;
@@ -165,7 +176,7 @@ a {
 .bottompart {
 
 }
-
+/*
 #zatemnenie1 {
     background-color:#1d1a1de3;
     width: 100%;
@@ -195,10 +206,6 @@ a {
     text-align: right;
     position: relative;
     left: 220px;
-    /*position: relative;
-    right: 150px;
-    font-weight: bold;
-    font-size: large;*/
 }
 
 #header-okno1 a {
@@ -227,7 +234,6 @@ a {
     background-color: red;
     padding: 0 12px;
     margin: 10px;
-    /*margin-left: 150px; */
     text-decoration: none;
     font-size: 14pt;
     cursor: pointer;
@@ -236,6 +242,7 @@ a {
 .close1:hover {
     background: #ff6f6f;
 }
+*/
 
 #zatemnenie2 {
     background-color:#1d1a1de3;
@@ -248,8 +255,8 @@ a {
 }
 
 #okno2 {
-    width: 500px;
-    height: 460px;
+    width: 550px;
+    height: 550px;
     padding: 15px;
     
     border-radius: 10px;
@@ -263,10 +270,52 @@ a {
     background-color: #554A56;
 }
 
+
+
+.tabs>input[type="radio"]
+{
+    display: none;
+}
+
+#tab-content1, #tab-content2 {
+    display: none;
+    text-align: center;
+}
+
+#tab-btn-1:checked~#tab-content1,
+#tab-btn-2:checked~#tab-content2 {
+      display: block;
+    }
+
+.tabs>label {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      user-select: none;
+      padding: 2px 8px;
+      font-size: 16px;
+      color: rgb(0, 0, 0);
+      background-color: #7A6B86;
+      line-height: 1.5;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+      cursor: pointer;
+      position: relative;
+      top: 1px;
+    }
+
+.tabs>label:not(:first-of-type) {
+      border-left: none;
+    }
+
+.tabs>input[type="radio"]:checked+label {
+    background-color: #D9D9D9;
+    }
+
 #header-okno2 span {
     text-align: right;
     position: relative;
     left: 220px;
+    
     /*position: relative;
     right: 150px;
     font-weight: bold;
@@ -275,8 +324,36 @@ a {
 
 #header-okno2 a {
     position: relative;
-    left: 380px;
+    left: 10px;
 }
+
+#header-okno2 label {
+    margin-left: 60px;
+}
+
+#header-okno2 {
+    border: 1px solid #e0e0e0;
+    background-color: #D9D9D9;
+    color: #7A6B86;
+    width: 320px;
+    text-align: center;
+    margin-left: 120px;
+    margin-top: 100px;
+    padding-bottom: 20px;
+}
+
+#tab-content1>input:not(.submit11) {
+    background-color: #AEA8B4;
+    height: 25px;
+}
+
+
+
+#tab-content2>input:not(.submit22) {
+    background-color: #AEA8B4;
+    height: 25px;
+}
+
 
 #submit2 {
     position: relative;
@@ -295,7 +372,7 @@ a {
     background-color: red;
     padding: 0 12px;
     margin: 10px;
-    /*margin-left: 150px; */
+    
     text-decoration: none;
     font-size: 14pt;
     cursor: pointer;
@@ -327,28 +404,37 @@ a {
     bottom: 0;
     left: 0;
     margin: auto;
-    background-color: #554A56;
+    background-color: #6F6474;
 }
 
 #header-okno3 span {
     text-align: right;
     position: relative;
     left: 220px;
+    
     /*position: relative;
     right: 150px;
     font-weight: bold;
     font-size: large;*/
 }
 
+#header-okno3 {
+    border: 2px solid black;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    background-color: #504954;
+    padding-top: 15px;
+}
+
 #header-okno3 a {
     position: relative;
-    left: 380px;
+    left: 360px;
 }
 
 #submit3 {
     position: relative;
     left: 210px;
-    top: 400px;
+    top: 370px;
 
 }
 
@@ -391,6 +477,10 @@ a {
     background-color: #554A56;
 }
 
+#header-okno4 {
+    border: 2px solid black;
+}
+
 #header-okno4 span {
     text-align: right;
     position: relative;
@@ -403,11 +493,11 @@ a {
 
 #header-okno4 a {
     position: relative;
-    left: 210px;
+    left: 200px;
 }
 
 #text4 textarea {
-    width: 290px;
+    width: 293.5px;
     height: 250px;
     background-color: #7F6E8C;
     color: white;

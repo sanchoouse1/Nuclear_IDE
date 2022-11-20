@@ -2,14 +2,18 @@
 <html lang="ru">
 <head>
     <link rel="stylesheet" href="idepage2.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/abbott.min.css"></link>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IDE</title>
     <script src="script.js"></script>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/perl/perl.min.js"></script>
 </head>
 <body>
-
+<!--
     <div id="zatemnenie1">
         <div id="okno1">
             <div id="header-okno1">
@@ -29,31 +33,65 @@
             </div>
         </div>
     </div>
+-->
+
 
     <div id="zatemnenie2">
         <div id="okno2">
-            <div id="header-okno2">
-                <span class="okno-top-text2">SIGN UP </span>
-            <a href="#" class="close2">X</a><br>
-            </div>
-            <div>
-                <p>e-mail:</p>
-                <input type="e-mail">
-                <br>
-                <br>
-                <p>Login:</p>
-                <input type="login">
-                <br>
-                <br>
-                <p>Password:</p>
-                <input type="password">
-                <br>
-                <br>
-                <p>Password again:</p>
-                <input type="password">
-            </div>
-            <div id="submit2">
-                <input type="submit">
+
+            <div id="header-okno2" class="tabs">
+                <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+                <label for="tab-btn-1" id="knopkaPaddingEdit1">Register</label>
+                <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+                <label for="tab-btn-2" id="knopkaPaddingEdit2">Login</label>
+                <a href="#" class="close2">X</a><br>
+                <!--</div>-->
+
+                <div id="tab-content1">
+                    <form class="js-form" name="js-form" action="" novalidate >
+                        Nickname:
+                        <br>
+                        <input type="login" class="js-input" data-reg="^[a-zA-Z0-9]+$">
+                        <br>
+                        <br>
+                        e-mail:
+                        <br>
+                        <input type="e-mail" class="js-input js-input-email" data-reg="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$">
+                        <br>
+                        <br>
+                        Password:
+                        <br>
+                        <input type="password" class="js-input" data-reg="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                        <br>
+                        <br>
+                        Password again:
+                        <br>
+                        <input type="password" class="js-input" data-reg="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                        <br>
+                        <br>
+                        <input class="submit11" type="submit">
+                    </form>
+
+                </div>
+
+
+                <div id="tab-content2">
+                    <form class="js-form" name="js-form" action="" novalidate>
+                        Login:
+                        <br>
+                        <input type="login" class="js-input" data-reg="^[a-zA-Z0-9]+$">
+                        <br>
+                        <br>
+                        Password:
+                        <br>
+                        <input type="password" class="js-input" data-reg="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                        <br>
+                        <br>
+                        <input class="submit22" type="submit">
+                    </form>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -104,8 +142,8 @@
         -->
             <div class="Name">NUCLEAR</div>
             <div class="SIGN">
-                <a href="#zatemnenie1" class="in">Sign In</a>
-                <a href="#zatemnenie2" class="up">Sign Up</a>
+                <!-- <a href="#zatemnenie1" class="in">Sign In</a> -->
+                <a href="#zatemnenie2" class="up">Sign Up / Sign In</a>
             </div>
 
         </div>
@@ -138,13 +176,18 @@
                     <p>file1.cs</p>
                 </div>
             </div>
-
-            <textarea class="code">
+            
+            <textarea id="code" name="code" class="code">
+                if($cool_variable) {
+                    doTheCoolThing();
+                }
             </textarea>
+            
 
             <div class="console-container">
                 <div class="header-console">
-                    Console
+                    <a href="#" id="RUN" class="RUN"> >RUN</a>
+                    <span class="Console">Console</span>
                 </div>
 
                 <textarea class="console" readonly>
