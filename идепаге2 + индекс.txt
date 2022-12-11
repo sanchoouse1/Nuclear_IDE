@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="idepage2.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDE</title>
+    <script src="script.js"></script>
+</head>
+<body>
+
+    <div id="zatemnenie1">
+        <div id="okno1">
+            <div id="header-okno1">
+                <span class="okno-top-text1">SIGN IN </span>
+            <a href="#" class="close1">X</a><br>
+            </div>
+            <div>
+                <p>Login:</p>
+                <input type="login">
+                <br>
+                <br>
+                <p>Password:</p>
+                <input type="password">
+            </div>
+            <div id="submit1">
+                <input type="submit">
+            </div>
+        </div>
+    </div>
+
+    <div id="zatemnenie2">
+        <div id="okno2">
+            <div id="header-okno2">
+                <span class="okno-top-text2">SIGN UP </span>
+            <a href="#" class="close2">X</a><br>
+            </div>
+            <div>
+                <p>e-mail:</p>
+                <input type="e-mail">
+                <br>
+                <br>
+                <p>Login:</p>
+                <input type="login">
+                <br>
+                <br>
+                <p>Password:</p>
+                <input type="password">
+                <br>
+                <br>
+                <p>Password again:</p>
+                <input type="password">
+            </div>
+            <div id="submit2">
+                <input type="submit">
+            </div>
+        </div>
+    </div>
+
+    <div id="zatemnenie3">
+        <div id="okno3">
+            <div id="header-okno3">
+                <span class="okno-top-text3">SETTINGS</span>
+                <a href="#" class="close2">X</a><br>
+            </div>
+            <div>
+                <span>Color Theme:</span>
+                <select size="1" name="Color Theme">
+                <option>Lilac</option>
+                <option>Light</option>
+                <option>Dark</option>
+                </select>
+            </div>
+            <div id="submit3">
+                <span><input type="submit"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="zatemnenie4">
+        <div id="okno4">
+            <div id="header-okno4">
+                <span class="okno-top-text4">Notes</span>
+                <a href="#" class="close4">X</a><br>
+            </div>
+            <div id="text4">
+                <textarea></textarea>
+            </div>
+        </div>
+    </div>
+
+    <header class="container-top">
+        <div class="toppart">
+           <!-- <div>
+                <div class="Top-Content">
+                    <div class="IDE-Name">NUCLEAR</div>
+                    <span class="right">
+                        <div class="SignIn">Sign In</div>
+                        <div class="SignUp">Sign Up</div>
+                    </span>
+                </div>
+            </div>
+        -->
+            <div class="Name">NUCLEAR</div>
+            <div class="SIGN">
+                <a href="#zatemnenie1" class="in">Sign In</a>
+                <a href="#zatemnenie2" class="up">Sign Up</a>
+            </div>
+
+        </div>
+    </header>
+
+    
+
+    <main class="main1">
+        <div class="main2">
+            <div class="sidebuttons-container">
+
+
+                    <div class="headerTextSideButtons">
+                        <div></div>
+                    </div>
+
+                    <div class="buttons-container">
+                        <div id="highbutton"><a href="#">NewFileIcon</a></div>
+                        <div><a href="#zatemnenie4">NotesIcon</a></div>
+                        <div><a href="#zatemnenie3">SettingsIcon</a></div>
+                    </div>
+
+            </div>
+
+            <div class="filespart">
+                <div class="MyFiles">
+                    <div>My files:</div>
+                </div>
+                <div id="p">
+                    <p>file1.cs</p>
+                </div>
+            </div>
+
+            <textarea class="code">
+            </textarea>
+
+            <div class="console-container">
+                <div class="header-console">
+                    Console
+                </div>
+
+                <textarea class="console" readonly>
+
+                </textarea>
+
+            </div>
+           <!--<div class="console-container">
+                <div>
+                    <div class="console">Console</div>
+                </div>
+            </div>-->
+
+        </div>
+    </main>
+
+
+    <footer class="footer">
+        <div class="bottompart">
+            <div>
+                <div>
+                    <a href="https://github.com/sanchoouse1" target=»_blank>GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>
+
+
+
+
+ИДЕПАГЕ2
+body {
+    margin: 0;
+    color: rgb(255, 226, 250);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: rgb(15, 14, 15);
+}
+
+/*.Top-Content {
+    display: flex;
+}
+
+.right {
+    display:flex;
+}
+
+
+.IDE-Name {
+    font-size: 16px;
+    font-weight: bold;
+}
+*/
+.toppart {
+    display: flex;
+}
+.Name {
+    text-align: center;
+    margin-right: 600px;
+    color: #A880FF;
+}
+
+.SIGN {
+    display:block;
+    text-align: right;
+}
+.up {
+    margin-left: 15px;
+}
+a {
+    color:rgb(255, 226, 250);
+}
+
+.SIGN a:hover, .SIGN a.active {
+	color:#6feeff;
+
+}
+
+.container-top {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #271D28;
+    padding: 15px;
+}
+
+.main1 {
+    flex-grow: 1;
+    background-color: rgb(49, 36, 46);
+    
+}
+
+.main2 {
+    display: flex;
+    /*height: 744px;*/
+    
+}
+
+.sidebuttons-container {
+    display: flex;
+    text-align: center;
+    background-color: #271D28;
+    flex: 0.5;
+    flex-direction: column;
+    border-right: 2.5px solid #000000;
+
+
+}
+
+.buttons-container {
+    /*height: 700px;*/
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.buttons-container div {
+    margin: 20px 0;
+}
+
+#highbutton {
+    margin-top: 75px;
+}
+
+.filespart {
+    flex: 1.8;
+    border-top: 2.5px solid #000000;
+    border-bottom: 2.5px solid #000000;
+    border-right: 1px solid #000000;
+    
+    background-color: #3B2D3D;
+}
+
+.MyFiles {
+    border-bottom: 2.5px solid black;
+    border-right: 2.5px solid black;
+    padding: 15px;
+    text-align: center;
+    font-size: 20px;
+    background-color: #271D28;
+}
+
+.filespart #p {
+    border-bottom: 1px solid black;
+    padding: 1px 0px 0px 50px;
+    
+    background-color: #554A56;
+}
+
+.code {
+    flex: 4;
+    text-align: left;
+    color:#6feeff;
+    padding: 10px 10px;
+    border-top: 2.5px solid #000000;
+    border-bottom: 2.5px solid #000000;
+    border-right: 2.5px solid #000000;
+    background-color: #554A56;
+}
+
+
+.console-container {
+    flex: 3;
+    border-top: 2.5px solid #000000;
+    border-bottom: 2.5px solid #000000;
+    background-color: #1d1a1d;
+}
+
+.console {
+    background-color: #1d1a1d;
+    width: 469px;
+    color:rgb(81, 255, 0);
+    min-height: calc(100vh - 156.55px);
+    /*width: 100%*/
+    /*min-height: 100vh;*/
+}
+
+.header-console {
+    text-align: center;
+    border-bottom: 2.5px solid black;
+    padding: 10px 15px;
+    font-size: 20px;
+    background-color: #271D28;
+}
+
+.footer {
+    flex-shrink: 0;
+    background-color: green;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #271D28;
+
+    padding: 15px;
+}
+
+.bottompart {
+
+}
+
+#zatemnenie1 {
+    background-color:#1d1a1de3;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#okno1 {
+    width: 500px;
+    height: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    color:aliceblue;
+    position:absolute;
+    top: 0;
+    right:0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    background-color: #554A56;
+}
+
+#header-okno1 span {
+    text-align: right;
+    position: relative;
+    left: 220px;
+    /*position: relative;
+    right: 150px;
+    font-weight: bold;
+    font-size: large;*/
+}
+
+#header-okno1 a {
+    position: relative;
+    left: 380px;
+}
+
+.login {
+    position: absolute;
+}
+
+#submit1 {
+    position: relative;
+    left: 210px;
+    top: 50px;
+
+}
+
+#zatemnenie1:target {
+    display: block;
+}
+
+.close1 {
+    display: inline-block;
+    color:white;
+    background-color: red;
+    padding: 0 12px;
+    margin: 10px;
+    /*margin-left: 150px; */
+    text-decoration: none;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.close1:hover {
+    background: #ff6f6f;
+}
+
+#zatemnenie2 {
+    background-color:#1d1a1de3;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#okno2 {
+    width: 500px;
+    height: 460px;
+    padding: 15px;
+    
+    border-radius: 10px;
+    color:aliceblue;
+    position:absolute;
+    top: 0;
+    right:0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    background-color: #554A56;
+}
+
+#header-okno2 span {
+    text-align: right;
+    position: relative;
+    left: 220px;
+    /*position: relative;
+    right: 150px;
+    font-weight: bold;
+    font-size: large;*/
+}
+
+#header-okno2 a {
+    position: relative;
+    left: 380px;
+}
+
+#submit2 {
+    position: relative;
+    left: 210px;
+    top: 50px;
+
+}
+
+#zatemnenie2:target {
+    display: block;
+}
+
+.close2 {
+    display: inline-block;
+    color:white;
+    background-color: red;
+    padding: 0 12px;
+    margin: 10px;
+    /*margin-left: 150px; */
+    text-decoration: none;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.close2:hover {
+    background: #ff6f6f;
+}
+
+#zatemnenie3 {
+    background-color:#1d1a1de3;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#okno3 {
+    width: 500px;
+    height: 500px;
+    padding: 15px;
+    border-radius: 10px;
+    color:aliceblue;
+    position:absolute;
+    top: 0;
+    right:0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    background-color: #554A56;
+}
+
+#header-okno3 span {
+    text-align: right;
+    position: relative;
+    left: 220px;
+    /*position: relative;
+    right: 150px;
+    font-weight: bold;
+    font-size: large;*/
+}
+
+#header-okno3 a {
+    position: relative;
+    left: 380px;
+}
+
+#submit3 {
+    position: relative;
+    left: 210px;
+    top: 400px;
+
+}
+
+#zatemnenie3:target {
+    display: block;
+}
+
+.close3 {
+    display: inline-block;
+    color:white;
+    background-color: red;
+    padding: 0 12px;
+    margin: 10px;
+    /*margin-left: 150px; */
+    text-decoration: none;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.close3:hover {
+    background: #ff6f6f;
+}
+
+#zatemnenie4 {
+    display: none;
+}
+
+#okno4 {
+    border: 3px solid black;
+    width: 300px;
+    height: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    color:aliceblue;
+    position:absolute;
+    top: 50;
+    right:0;
+    bottom: 0;
+    left: 0;
+    background-color: #554A56;
+}
+
+#header-okno4 span {
+    text-align: right;
+    position: relative;
+    left: 120px;
+    /*position: relative;
+    right: 150px;
+    font-weight: bold;
+    font-size: large;*/
+}
+
+#header-okno4 a {
+    position: relative;
+    left: 210px;
+}
+
+#text4 textarea {
+    width: 290px;
+    height: 250px;
+    background-color: #7F6E8C;
+    color: white;
+}
+#zatemnenie4:target {
+    display: block;
+}
+
+.close4 {
+    display: inline-block;
+    color:white;
+    background-color: red;
+    padding: 0 12px;
+    margin: 10px;
+    /*margin-left: 150px; */
+    text-decoration: none;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.close4:hover {
+    background: #ff6f6f;
+}
