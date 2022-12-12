@@ -68,6 +68,10 @@ app.post('/check-user', (req, res) => {
     });
     res.redirect('/' + foundUser); // изменяет адрес на маршрут /foundUser
   } else {
+      app.get('/:something', (req, res) => { // req - запрашиваемый маршрут и т.д.( то что в кавычках)
+      // вывод текста
+      res.send('No such page was found');
+      });
       console.log("Login failed: ", req.body.username);
       res.status(401).send('Login error / the data was entered incorrectly.');
       console.log(foundUser);
@@ -88,16 +92,14 @@ app.post('/check-user', (req, res) => {
 //      res.render('user', *функция /* {username: req.params.username})
 // });
 
+
 const PORT = 3000;
 //запуск сервера
 app.listen(PORT, ()=> {
     console.log(`Server started: http://localhost:${PORT}`)
 });
 
-app.get('/:something', (req, res) => { // req - запрашиваемый маршрут и т.д.( то что в кавычках)
-  // вывод текста
-  res.send('No such page was found');
-});
+
 
 
 
