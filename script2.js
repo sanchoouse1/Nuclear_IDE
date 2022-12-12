@@ -63,12 +63,14 @@ app.post('/check-user', (req, res) => {
     // настроить страницу после успешной авторизации пользователя
     // (без всплывающего окна + отредактировать header)
     app.get('/:foundUser', (req,res) => {
+      console.log(foundUser);
       res.render('userSelect', {foundUser: req.params.foundUser}); //отобразит в /:foundUser хтмл файл, но не перейдёт в него
     });
     res.redirect('/' + foundUser); // изменяет адрес на маршрут /foundUser
   } else {
       console.log("Login failed: ", req.body.username);
       res.status(401).send('Login error / the data was entered incorrectly.');
+      console.log(foundUser);
   }
     /*let username = req.body.username;
     if(username == "")
@@ -92,7 +94,10 @@ app.listen(PORT, ()=> {
     console.log(`Server started: http://localhost:${PORT}`)
 });
 
-
+app.get('/:something', (req, res) => { // req - запрашиваемый маршрут и т.д.( то что в кавычках)
+  // вывод текста
+  res.send('No such page was found');
+});
 
 
 
