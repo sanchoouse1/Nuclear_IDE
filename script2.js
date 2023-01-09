@@ -20,16 +20,12 @@ var users = [
   { username: 'admin', password: 'admin'},
   { username: 'viewer', password: 'viewer'}
 ];
-// для валидации данных - регулярные выражения:
-//var regular = [
-//  { email: `^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$`}
-//];
 
 // отслеживание (переход) главной страницы. Функция get позволяет отслеживать
 // любые URL адреса (у меня здесь это / - главная страница).
 app.get('/', (req, res) => { // req - запрашиваемый маршрут и т.д.( то что в кавычках)
     // вывод текста
-    res.render('index')
+    res.render('index');
 });
 
 // валидация данных в регистрации (ПОТОМ СДЕЛАТЬ HTML странички вместо недоступной alert)!!!
@@ -51,40 +47,43 @@ app.post('/validation', (req, res) => {
 app.post('/check-user', (req, res) => {
   var foundUser;
   // поиск пользователя в массиве users
-  for (var i = 0; i < users.length; i++) {
+  for (var i = 0; i < users.length; i++) 
+  {
     var u = users[i];
-    if (u.username == req.body.username && u.password == req.body.password) {
-        foundUser = u.username;
-        break;
+    if (u.username == req.body.username && u.password == req.body.password) 
+    {
+      foundUser = u.username;
+      break;
     }
   }
   if(foundUser !== undefined) {
     console.log(req.body);
-    // настроить страницу после успешной авторизации пользователя
-    // (без всплывающего окна + отредактировать header)
-    app.get('/:foundUser', (req,res) => {
-      console.log(foundUser);
-      res.render('userSelect', {foundUser: req.params.foundUser}); //отобразит в /:foundUser хтмл файл, но не перейдёт в него
-    });
+    // Установка куки
+    res.cookie('username', foundUser, { maxAge: 7800, httpOnly: true });
     res.redirect('/' + foundUser); // изменяет адрес на маршрут /foundUser
   } else {
       app.get('/:something', (req, res) => { // req - запрашиваемый маршрут и т.д.( то что в кавычках)
       // вывод текста
-      res.send('No such page was found');
+        res.send('No such page was found');
       });
       console.log("Login failed: ", req.body.username);
       res.status(401).send('Login error / the data was entered incorrectly.');
       console.log(foundUser);
   }
-    /*let username = req.body.username;
-    if(username == "")
-    {
-      //переадресовываем пользователя на ...URL
-        return res.redirect('/');
+});
+
+app.get('/:foundUser', (req, res) => {
+  // Проверка аутентификации пользователя
+  if (req.headers.cookie && req.headers.cookie.includes(`username=${req.params.foundUser}`)) {
+    res.render('userSelect', {foundUser: req.params.foundUser});
     } else {
-        console.log(req.body);
-        return res.redirect('/' + username);
-    } */
+    res.send('You are not authenticated');
+    }
+});
+
+// Обработка несуществующих страниц
+app.get('/:something', (req, res) => {
+  res.send('No such page was found');
 });
 
 // Передать в html-файл какие-либо функции, циклы, объекты и т.д.:
