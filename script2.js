@@ -59,7 +59,7 @@ app.post('/check-user', (req, res) => {
   if(foundUser !== undefined) {
     console.log(req.body);
     // Установка куки
-    res.cookie('username', foundUser, { maxAge: 7800, httpOnly: true });
+    res.cookie('username', foundUser, { maxAge: 2592000000, httpOnly: true });
     res.redirect('/' + foundUser); // изменяет адрес на маршрут /foundUser
   } else {
       app.get('/:something', (req, res) => { // req - запрашиваемый маршрут и т.д.( то что в кавычках)
