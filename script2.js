@@ -1,4 +1,3 @@
-require('./views/script.js');
 require('./validation.js');
 
 const express = require('express')
@@ -14,12 +13,6 @@ app.use(express.urlencoded({extended: false}));
 // и в самом ejs файле меняем ссылку на css файл - как будто мы уже находимся
 // в статической папке 'public'.
 app.use(express.static('public'));
-
-// зарегистрированные пользователи, которые могут быть авторизованы:
-var users = [
-  { username: 'admin', password: 'admin'},
-  { username: 'viewer', password: 'viewer'}
-];
 
 // отслеживание (переход) главной страницы. Функция get позволяет отслеживать
 // любые URL адреса (у меня здесь это / - главная страница).
@@ -41,6 +34,12 @@ app.post('/validation', (req, res) => {
       console.log('Error validation of data');
     }
 });
+
+// зарегистрированные пользователи, которые могут быть авторизованы:
+var users = [
+  { username: 'admin', password: 'admin'},
+  { username: 'viewer', password: 'viewer'}
+];
 
 // передаём данные из формочек (обрабатываем именно post - данные)
 // если по URL адресу /check-user переданы данные из формочки

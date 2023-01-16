@@ -85,10 +85,25 @@ a {
 
 .buttons-container div {
     margin: 20px 0;
+    width: 70px;
 }
 
-#highbutton {
-    margin-top: 75px;
+#buttonCreateFile {
+    margin-top: 56px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-right: 25px;
+    border: 2px solid #3B2D3D;
+    background-color: #3B2D3D;
+    cursor: pointer;
+}
+
+#buttonCreateFile:hover {
+  background-color:  #554A56;
+}
+
+#buttonCreateFile:active {
+  background-color: #271D28;
 }
 
 .filespart {
@@ -108,9 +123,22 @@ a {
     background-color: #271D28;
 }
 
-.filespart #p {
-    border-bottom: 1px solid black;
-    padding: 1px 0px 0px 50px;
+.filespart #files {
+    border-bottom: 0px solid black;
+    
+}
+
+.active {
+    background-color: blue;
+  }
+
+.new-element-class {
+    border: 1px solid black;
+    padding-left: 50px;
+    cursor: pointer;
+}
+
+.new-element-class:hover {
     background-color: #554A56;
 }
 

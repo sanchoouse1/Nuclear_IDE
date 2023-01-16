@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="stylesheet" href="/css/idepage2.css">
+    <link rel="stylesheet" href="css/idepage2.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"></link>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/abbott.min.css"></link>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IDE</title>
-    <script src="auth.js"></script>
     <script src="script.js"></script>
-    <script src="validation.js"></script>
-    <script src="script2.js"></script>
-    <script src="scriptTEST.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/perl/perl.min.js"></script>
-    <script>
-        
-    </script>
 </head>
 
 <body>
@@ -59,22 +52,22 @@
                     <form method='post' class="js-form" name="js-form" action="/validation" novalidate >
                         Nickname:
                         <br>
-                        <input name='login' type="login" /onchange='checkLogin(this.value)' class="js-input" data-reg="^[a-zA-Z0-9]+$">
+                        <input name='login' type="login" onchange='checkLogin(this.value)' class="js-input">
                         <br>
                         <br>
                         e-mail:
                         <br>
-                        <input name='email' type="e-mail" class="js-input js-input-email" data-reg="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$">
+                        <input name='email' type="e-mail" class="js-input js-input-email">
                         <br>
                         <br>
                         Password:
                         <br>
-                        <input name='password' type="password" /onchange='checkPassword(this.value)' class="js-input" data-reg="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                        <input name='password' type="password" onchange='checkPassword(this.value)' class="js-input">
                         <br>
                         <br>
                         Password again:
                         <br>
-                        <input name='passwordAgain' type="password" class="js-input" data-reg="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                        <input name='passwordAgain' type="password" class="js-input">
                         <br>
                         <br>
                         <button class="submit11" type="submit">Пока недоступно</button>
@@ -87,12 +80,12 @@
                     <form method="post" class="js-form" name="js-form" action="/check-user" novalidate>
                         Login:
                         <br>
-                        <input name="username" type="login" class="js-input" data-reg="^[a-zA-Z0-9]+$">
+                        <input name="username" type="login" class="js-input">
                         <br>
                         <br>
                         Password:
                         <br>
-                        <input name="password" type="password" class="js-input" data-reg="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                        <input name="password" type="password" class="js-input">
                         <br>
                         <br>
                         <button id="btn" class="submit22" type="submit">Войти</button>
@@ -169,7 +162,7 @@
                     </div>
 
                     <div class="buttons-container">
-                        <div id="highbutton"><a href="#">NewFileIcon</a></div>
+                        <div id="buttonCreateFile">CreateNewFile</div>
                         <div><a href="#zatemnenie4">NotesIcon</a></div>
                         <div><a href="#zatemnenie3">SettingsIcon</a></div>
                     </div>
@@ -180,8 +173,8 @@
                 <div class="MyFiles">
                     <div>My files:</div>
                 </div>
-                <div id="p">
-                    <p>file1.cs</p>
+                <div id="files">
+                    <div id="firstCreatedFile" class="new-element-class"><p>file1.cs</p></div>
                 </div>
             </div>
             

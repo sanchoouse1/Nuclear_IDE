@@ -1,26 +1,146 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="stylesheet" href="/css/idepage2.css">
+    <link rel="stylesheet" href="css/idepage2.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"></link>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/abbott.min.css"></link>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IDE</title>
-    <script src="auth.js"></script>
-    <script src="validation.js"></script>
     <script src="script.js"></script>
-    <script src="script2.js"></script>
-    <script src="scriptTEST.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/perl/perl.min.js"></script>
 </head>
 
 <body>
+<!--
+    <div id="zatemnenie1">
+        <div id="okno1">
+            <div id="header-okno1">
+                <span class="okno-top-text1">SIGN IN </span>
+            <a href="#" class="close1">X</a><br>
+            </div>
+            <div>
+                <p>Login:</p>
+                <input type="login">
+                <br>
+                <br>
+                <p>Password:</p>
+                <input type="password">
+            </div>
+            <div id="submit1">
+                <input type="submit">
+            </div>
+        </div>
+    </div>
+-->
+
+
+    <div id="zatemnenie2">
+        <div id="okno2">
+
+            <div id="header-okno2" class="tabs">
+                <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+                <label for="tab-btn-1" id="knopkaPaddingEdit1">Register</label>
+                <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+                <label for="tab-btn-2" id="knopkaPaddingEdit2">Login</label>
+                <a href="#" class="close2">X</a><br>
+                <!--</div>-->
+
+                <div id="tab-content1">
+                    <form method='post' class="js-form" name="js-form" action="/validation" novalidate >
+                        Nickname:
+                        <br>
+                        <input name='login' type="login" onchange='checkLogin(this.value)' class="js-input">
+                        <br>
+                        <br>
+                        e-mail:
+                        <br>
+                        <input name='email' type="e-mail" class="js-input js-input-email">
+                        <br>
+                        <br>
+                        Password:
+                        <br>
+                        <input name='password' type="password" onchange='checkPassword(this.value)' class="js-input">
+                        <br>
+                        <br>
+                        Password again:
+                        <br>
+                        <input name='passwordAgain' type="password" class="js-input">
+                        <br>
+                        <br>
+                        <button class="submit11" type="submit">Пока недоступно</button>
+                    </form>
+
+                </div>
+
+
+                <div id="tab-content2">
+                    <form method="post" class="js-form" name="js-form" action="/check-user" novalidate>
+                        Login:
+                        <br>
+                        <input name="username" type="login" class="js-input">
+                        <br>
+                        <br>
+                        Password:
+                        <br>
+                        <input name="password" type="password" class="js-input">
+                        <br>
+                        <br>
+                        <button id="btn" class="submit22" type="submit">Войти</button>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div id="zatemnenie3">
+        <div id="okno3">
+            <div id="header-okno3">
+                <span class="okno-top-text3">SETTINGS</span>
+                <a href="#" class="close2">X</a><br>
+            </div>
+            <div>
+                <span>Color Theme:</span>
+                <select size="1" name="Color Theme">
+                <option>Lilac</option>
+                <option>Light</option>
+                <option>Dark</option>
+                </select>
+            </div>
+            <div id="submit3">
+                <span><input type="submit"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="zatemnenie4">
+        <div id="okno4">
+            <div id="header-okno4">
+                <span class="okno-top-text4">Notes</span>
+                <a href="#" class="close4">X</a><br>
+            </div>
+            <div id="text4">
+                <textarea></textarea>
+            </div>
+        </div>
+    </div>
 
     <header class="container-top">
         <div class="toppart">
+           <!-- <div>
+                <div class="Top-Content">
+                    <div class="IDE-Name">NUCLEAR</div>
+                    <span class="right">
+                        <div class="SignIn">Sign In</div>
+                        <div class="SignUp">Sign Up</div>
+                    </span>
+                </div>
+            </div>
+        -->
             <div class="Name">NUCLEAR</div>
             <div class="SIGN">
                 <span>Hello, <%= foundUser %>!</span>
@@ -29,6 +149,7 @@
         </div>
     </header>
 
+    
 
     <main class="main1">
         <div class="main2">
@@ -40,7 +161,7 @@
                     </div>
 
                     <div class="buttons-container">
-                        <div id="highbutton"><a href="#">NewFileIcon</a></div>
+                        <div id="buttonCreateFile">CreateNewFile</div>
                         <div><a href="#zatemnenie4">NotesIcon</a></div>
                         <div><a href="#zatemnenie3">SettingsIcon</a></div>
                     </div>
@@ -51,17 +172,17 @@
                 <div class="MyFiles">
                     <div>My files:</div>
                 </div>
-                <div id="p">
-                    <p>file1.cs</p>
+                <div id="files">
+                    <div id="firstCreatedFile" class="new-element-class"><p>file1.cs</p></div>
                 </div>
             </div>
-
+            
             <textarea id="code" name="code" class="code">
                 if($cool_variable) {
                     doTheCoolThing();
                 }
             </textarea>
-
+            
 
             <div class="console-container">
                 <div class="header-console">
