@@ -1,7 +1,40 @@
-require('./validation.js');
-
-const express = require('express')
+const express = require('express');
+const bcrypt = require('bcrypt');
 const app = express();
+const sqlite3 = require('sqlite3').verbose();
+
+
+let passwordOfAdmin = "admin";
+let passwordOfViewer = "viewer";
+
+let db = new sqlite3.Database('database.sqlite', (err) => {
+  if (err) {
+    // Can't open database.sqlite
+    console.log(err.message);
+    throw err;
+  } else {
+    db.run(`CREATE TABLE users (username TEXT, password TEXT)`, (err) => {
+      if (err) {
+        // Таблица уже создана
+        console.log("Возможно таблица уже создана");
+      } else {
+        // хеширование пароля для безопасности (возможно пригодится в будущем)
+        bcrypt.genSalt(10, function (err, salt) {
+          bcrypt.hash("admin", salt, function(err,hash) {
+            db.run("INSERT INTO users VALUES ('admin',?)", [hash]);
+          })
+        })
+        bcrypt.genSalt(10, function (err, salt) {
+          bcrypt.hash("admin", salt, function(err,hash) {
+            db.run("INSERT INTO users VALUES ('admin',?)", [hash]);
+          })
+        })
+      }
+    });
+  }
+});
+
+
 
 // устанавливаем настройку(шаблонизатор) к нашему приложению -
 // чекает папку views (там расширение .ejs)
@@ -35,6 +68,41 @@ app.post('/validation', (req, res) => {
     }
 });
 
+app.post('/check-user', (req, res) => {
+  let username = req.body.username;
+  console.log("username из формы = " + username);
+  let password = req.body.password;
+  console.log("password из формы = " + password);
+//[username] - это массив, который содержит значение имени пользователя, которое мы получили из формы авторизации.
+//Это значение будет подставлено в запрос вместо знака вопроса, и используется для поиска данных в таблице users
+//по имени пользователя.
+  db.get("SELECT username, password FROM users WHERE username = ?", [username], function(err, row) {
+    
+
+    if(row)
+    {
+      console.log('row.username = ' + row.username);
+      console.log('row.password = ' + row.password);
+      // bcrypt - хеш-функция принимает исходный пароль и возвращает необратимый хеш
+      bcrypt.compare(password, row.password, function (err, result) {
+        console.log("result = " + result);
+        if (result) {
+          // атворизация успешна
+          // Установка куки
+          res.cookie('username', username, { maxAge: 2592000000, httpOnly: true });
+          res.redirect('/' + username); // изменяет адрес на маршрут /foundUser
+        } else {
+          res.send('Error of login or password');
+        }
+      })
+    } else {
+      // Ошибка авторизации
+      res.send('Authorization error');
+    }
+  })
+})
+
+/*
 // зарегистрированные пользователи, которые могут быть авторизованы:
 var users = [
   { username: 'admin', password: 'admin'},
@@ -46,10 +114,10 @@ var users = [
 app.post('/check-user', (req, res) => {
   var foundUser;
   // поиск пользователя в массиве users
-  for (var i = 0; i < users.length; i++) 
+  for (var i = 0; i < users.length; i++)
   {
     var u = users[i];
-    if (u.username == req.body.username && u.password == req.body.password) 
+    if (u.username == req.body.username && u.password == req.body.password)
     {
       foundUser = u.username;
       break;
@@ -69,7 +137,7 @@ app.post('/check-user', (req, res) => {
       res.status(401).send('Login error / the data was entered incorrectly.');
       console.log(foundUser);
   }
-});
+}); */
 
 app.get('/:foundUser', (req, res) => {
   // Проверка аутентификации пользователя
@@ -96,34 +164,3 @@ const PORT = 3000;
 app.listen(PORT, ()=> {
     console.log(`Server started: http://localhost:${PORT}`)
 });
-
-
-
-
-
-
-
-//
-// РАБОТА С БД SQLite
-//
-/*
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
-
-db.serialize(function() {
-
-  db.run('CREATE TABLE lorem (info TEXT)');
-  var stmt = db.prepare('INSERT INTO lorem VALUES (?)');
-
-  for (var i = 0; i < 10; i++) {
-    stmt.run('Ipsum ' + i);
-  }
-
-  stmt.finalize();
-
-  db.each('SELECT rowid AS id, info FROM lorem', function(err, row) {
-    console.log(row.id + ': ' + row.info);
-  });
-});
-
-db.close(); */
