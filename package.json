@@ -4,7 +4,7 @@
   "description": "ide-online",
   "main": "script2.js",
   "scripts": {
-    "start": "node script2.js"
+    "start": "node script2.js --omit=dev"
   },
   "repository": {
     "type": "git",
