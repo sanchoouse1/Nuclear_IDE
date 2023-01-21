@@ -2,13 +2,7 @@ console.log("Работает?");
 
 
 window.onload = function() {
-
-    console.log("Работает?");
-
-
-
-
-
+    console.log("Процесс создания файлов:");
     document.getElementById("firstCreatedFile").classList.add("active");
     let button = document.getElementById('buttonCreateFile');
     console.log(button);
@@ -47,11 +41,43 @@ window.onload = function() {
 
 
 
-
-
-
+    let buttonAuthorization = document.getElementById('buttonAuthorization');
+    let formAuthorization = document.querySelector("#formAuthorization");
+    buttonAuthorization.addEventListener("click", (event) => {
+            event.preventDefault(); // отменяет отправку формы по умолчанию, чтобы мы могли отправить запрос самостоятельно
+            const formData = new FormData(formAuthorization); // создаем новый экземпляр FormData из элемента формы
+            const username = formData.get("username");
+            const password = formData.get("password");
+            console.log("Пошла родная");
+            // создаем объект для отправки с серверу
+            const data = {username: username, password: password};
+            // отправляем POST запрос с данными формы
+            fetch("/check-user", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    // do something if the server returned a successful response
+                    window.location.replace("/" + data.username) //redirect to userSelect
+                    console.log('OK');
+                } else {
+                    // do something if the server returned an error
+                    alert("Error of login or password");
+                }
+            });
+        });
 
 }
+
+// Валидация                v
+// Авторизация              v
+// Создание файлов          x
+// Подсветка синтаксиса     x
+// Компиляция файлов        x
+// Заметки                  x
+
 
 
 

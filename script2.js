@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const app = express();
 const sqlite3 = require('sqlite3').verbose();
+const bodyParser = require('body-parser');
 
 
 let passwordOfAdmin = "admin";
@@ -25,8 +26,8 @@ let db = new sqlite3.Database('database.sqlite', (err) => {
           })
         })
         bcrypt.genSalt(10, function (err, salt) {
-          bcrypt.hash("admin", salt, function(err,hash) {
-            db.run("INSERT INTO users VALUES ('admin',?)", [hash]);
+          bcrypt.hash("viewer", salt, function(err,hash) {
+            db.run("INSERT INTO users VALUES ('viewer',?)", [hash]);
           })
         })
       }
@@ -46,6 +47,7 @@ app.use(express.urlencoded({extended: false}));
 // и в самом ejs файле меняем ссылку на css файл - как будто мы уже находимся
 // в статической папке 'public'.
 app.use(express.static('public'));
+app.use(express.json());
 
 // отслеживание (переход) главной страницы. Функция get позволяет отслеживать
 // любые URL адреса (у меня здесь это / - главная страница).
@@ -68,6 +70,9 @@ app.post('/validation', (req, res) => {
     }
 });
 
+
+
+
 app.post('/check-user', (req, res) => {
   let username = req.body.username;
   console.log("username из формы = " + username);
@@ -77,8 +82,6 @@ app.post('/check-user', (req, res) => {
 //Это значение будет подставлено в запрос вместо знака вопроса, и используется для поиска данных в таблице users
 //по имени пользователя.
   db.get("SELECT username, password FROM users WHERE username = ?", [username], function(err, row) {
-    
-
     if(row)
     {
       console.log('row.username = ' + row.username);
@@ -92,7 +95,7 @@ app.post('/check-user', (req, res) => {
           res.cookie('username', username, { maxAge: 2592000000, httpOnly: true });
           res.redirect('/' + username); // изменяет адрес на маршрут /foundUser
         } else {
-          res.send('Error of login or password');
+          res.status(404).send('Error of login or password');
         }
       })
     } else {
@@ -102,61 +105,24 @@ app.post('/check-user', (req, res) => {
   })
 })
 
-/*
-// зарегистрированные пользователи, которые могут быть авторизованы:
-var users = [
-  { username: 'admin', password: 'admin'},
-  { username: 'viewer', password: 'viewer'}
-];
-
-// передаём данные из формочек (обрабатываем именно post - данные)
-// если по URL адресу /check-user переданы данные из формочки
-app.post('/check-user', (req, res) => {
-  var foundUser;
-  // поиск пользователя в массиве users
-  for (var i = 0; i < users.length; i++)
-  {
-    var u = users[i];
-    if (u.username == req.body.username && u.password == req.body.password)
-    {
-      foundUser = u.username;
-      break;
-    }
-  }
-  if(foundUser !== undefined) {
-    console.log(req.body);
-    // Установка куки
-    res.cookie('username', foundUser, { maxAge: 2592000000, httpOnly: true });
-    res.redirect('/' + foundUser); // изменяет адрес на маршрут /foundUser
-  } else {
-      app.get('/:something', (req, res) => { // req - запрашиваемый маршрут и т.д.( то что в кавычках)
-      // вывод текста
-        res.send('No such page was found');
-      });
-      console.log("Login failed: ", req.body.username);
-      res.status(401).send('Login error / the data was entered incorrectly.');
-      console.log(foundUser);
-  }
-}); */
-
 app.get('/:foundUser', (req, res) => {
   // Проверка аутентификации пользователя
+  console.log("Обрабатываем страницу /:foundUser");
+  console.log("req.params.foundUser = " + req.params.foundUser);
   if (req.headers.cookie && req.headers.cookie.includes(`username=${req.params.foundUser}`)) {
+    console.log("прошли первый if в get'e");
     res.render('userSelect', {foundUser: req.params.foundUser});
     } else {
     res.send('You are not authenticated');
     }
 });
 
+
+
 // Обработка несуществующих страниц
 app.get('/:something', (req, res) => {
   res.send('No such page was found');
 });
-
-// Передать в html-файл какие-либо функции, циклы, объекты и т.д.:
-// app.get('/user/:username', (req, res) => {
-//      res.render('user', *функция /* {username: req.params.username})
-// });
 
 
 const PORT = 3000;
