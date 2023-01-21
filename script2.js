@@ -89,18 +89,20 @@ app.post('/check-user', (req, res) => {
       // bcrypt - хеш-функция принимает исходный пароль и возвращает необратимый хеш
       bcrypt.compare(password, row.password, function (err, result) {
         console.log("result = " + result);
+        //console.log("error = " + error);
         if (result) {
           // атворизация успешна
-          // Установка куки
-          res.cookie('username', username, { maxAge: 2592000000, httpOnly: true });
-          res.redirect('/' + username); // изменяет адрес на маршрут /foundUser
+          // Установка куки и отправка статуса 200
+          res.status(200).cookie('username', username, { maxAge: 2592000000, httpOnly: true }).json({username});
         } else {
+          // проходит если логин как в БД, а хеш паролей не совпал
           res.status(404).send('Error of login or password');
         }
       })
     } else {
-      // Ошибка авторизации
-      res.send('Authorization error');
+      // Ошибка авторизации, если даже логин не совпал с данными из БД
+      console.log('User not found in the database');
+      res.status(404).send('Error of login or password');
     }
   })
 })

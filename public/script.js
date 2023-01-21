@@ -40,7 +40,7 @@ window.onload = function() {
 
 
 
-
+    // Авторизация
     let buttonAuthorization = document.getElementById('buttonAuthorization');
     let formAuthorization = document.querySelector("#formAuthorization");
     buttonAuthorization.addEventListener("click", (event) => {
@@ -62,9 +62,10 @@ window.onload = function() {
                     // do something if the server returned a successful response
                     window.location.replace("/" + data.username) //redirect to userSelect
                     console.log('OK');
+                    console.log(data.username);
                 } else {
                     // do something if the server returned an error
-                    alert("Error of login or password");
+                    alert('Error of login or password');
                 }
             });
         });
