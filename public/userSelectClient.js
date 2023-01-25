@@ -8,7 +8,6 @@ window.onload = function() {
 
     button.addEventListener("click", createNewElement);
     function createNewElement() {
-        console.log(countFiles);
         // добавление новых файлов от 2 до 10, + становление активными.
         if (countFiles < 11)
         {
@@ -20,13 +19,23 @@ window.onload = function() {
             newP.classList.add("active");
             newP.innerHTML = `<p>file${countFiles}.c</p>`;
             newP.setAttribute("data-num", countFiles); // добавил атрибуту data-num номер файла
-            window.history.pushState({}, "", "/" + usernameURL + "/file/" + countFiles);
+            //window.history.pushState({}, "", "/" + usernameURL + "/file/" + countFiles);
+            fetch(`/${usernameURL}/file/${countFiles}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("data = " + data);
+                    })
             newP.addEventListener("click", function(){
                 let activeButton = document.querySelector(".active");
                 activeButton.classList.remove("active");
                 this.classList.add("active");
                 let num = this.getAttribute("data-num"); // взял значение атрибута data-num и присвоили переменной
-                window.history.pushState({}, "", "/" + usernameURL + "/file/" + num); // переадресация без перезагрузки страницы
+                //window.history.pushState({}, "", "/" + usernameURL + "/file/" + num); // переадресация без перезагрузки страницы
+                fetch(`/${usernameURL}/file/${num}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("data = " + data);
+                    })
             });
             let parentNode = document.getElementById("files");
             parentNode.appendChild(newP);
@@ -38,8 +47,14 @@ window.onload = function() {
     firstCreatedFile.addEventListener("click", function() {
         let activeButton = document.querySelector("#files .active");
         activeButton.classList.remove("active");
+        let num = 1;
         firstCreatedFile.classList.add("active");
-        window.history.pushState({}, "", "/" + usernameURL + "/file/1");
+        //window.history.pushState({}, "", "/" + usernameURL + "/file/1");
+        fetch(`/${usernameURL}/file/${num}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log("data = " + data);
+            })
     })
 }
 

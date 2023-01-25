@@ -25,7 +25,7 @@ window.onload = function() {
             .then((response) => {
                 if (response.status === 200) {
                     // do something if the server returned a successful response
-                    window.location.replace("/" + data.username + "/file/1") //redirect to userSelect
+                    window.location.replace("/" + data.username + "/files") //redirect to userSelect
                     console.log('OK');
                     console.log(data.username);
                 } else {

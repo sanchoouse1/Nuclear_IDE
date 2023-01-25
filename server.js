@@ -104,7 +104,7 @@ app.post('/check-user', (req, res) => {
   })
 })
 
-app.get('/:foundUser/file/1', (req, res) => {
+app.get('/:foundUser/files', (req, res) => {
   // Проверка аутентификации пользователя
   console.log("Обрабатываем страницу /:foundUser");
   console.log("req.params.foundUser = " + req.params.foundUser);
@@ -122,6 +122,11 @@ app.get('/:foundUser/file/1', (req, res) => {
 app.get('/:something', (req, res) => {
   res.send('No such page was found');
 });
+
+app.get('/:foundUser/file/:num', (req, res) => {
+  console.log("textarea для " + req.params.foundUser + " связана s файлом N. " + req.params.num);
+  res.status(200).send('Ok');
+})
 
 
 const PORT = 3000;
