@@ -2,41 +2,6 @@ console.log("Работает?");
 
 
 window.onload = function() {
-    console.log("Процесс создания файлов:");
-    document.getElementById("firstCreatedFile").classList.add("active");
-    let button = document.getElementById('buttonCreateFile');
-    console.log(button);
-    let countFiles = 2;
-
-    button.addEventListener("click", createNewElement);
-    function createNewElement() {
-        console.log(countFiles);
-        if (countFiles < 11)
-        {
-            let newP = document.createElement("div");
-            let activeButton = document.querySelector("#files .active");
-            activeButton.classList.remove("active");
-            newP.setAttribute("id", "createdFile");
-            newP.setAttribute("class", "new-element-class")
-            newP.classList.add("active");
-            newP.innerHTML = `<p>file${countFiles}.cs</p>`;
-            newP.addEventListener("click", function(){
-                let activeButton = document.querySelector(".active");
-                activeButton.classList.remove("active");
-                this.classList.add("active");
-            });
-            let parentNode = document.getElementById("files");
-            parentNode.appendChild(newP);
-            countFiles++;
-        }
-    }
-
-    let firstCreatedFile = document.getElementById("firstCreatedFile");
-    firstCreatedFile.addEventListener("click", function() {
-        let activeButton = document.querySelector("#files .active");
-        activeButton.classList.remove("active");
-        firstCreatedFile.classList.add("active");
-    })
 
 
 
@@ -60,7 +25,7 @@ window.onload = function() {
             .then((response) => {
                 if (response.status === 200) {
                     // do something if the server returned a successful response
-                    window.location.replace("/" + data.username) //redirect to userSelect
+                    window.location.replace("/" + data.username + "/file/1") //redirect to userSelect
                     console.log('OK');
                     console.log(data.username);
                 } else {
@@ -70,11 +35,53 @@ window.onload = function() {
             });
         });
 
+
+
+    // Валидация
+    const formValidation = document.querySelector('.js-form');
+    const loginInputValidation = document.querySelector('input[name="login"]');
+    const emailInputValidation = document.querySelector('input[name="email"]');
+    const passwordInputValidation = document.querySelector('input[name="password"]');
+    const passwordAgainInputValidation = document.querySelector('input[name="passwordAgain"]');
+
+    formValidation.addEventListener('submit', event => {
+        event.preventDefault();
+        const login = loginInputValidation.value;
+        const email = emailInputValidation.value;
+        const password = passwordInputValidation.value;
+        const passwordAgain = passwordAgainInputValidation.value;
+
+        fetch('/validation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ login, email, password, passwordAgain })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Validation successful') {
+                    console.log('Validation successful');
+            } else {
+                alert('Validation failed');
+            }
+        })
+        .catch(error => console.error(error));
+    });
+
+
+
+
+    // Функция связки файлов для авторизации
+    
+
+
+
+
+
 }
 
 // Валидация                v
 // Авторизация              v
-// Создание файлов          x
+// Создание файлов          v
 // Подсветка синтаксиса     x
 // Компиляция файлов        x
 // Заметки                  x

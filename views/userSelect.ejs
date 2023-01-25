@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="stylesheet" href="css/idepage2.css">
+    <link rel="stylesheet" href="/css/idepage2.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"></link>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/abbott.min.css"></link>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IDE</title>
-    <script src="script.js"></script>
+    <script>var usernameURL = "<%= foundUser %>";</script>
+    <script src="/userSelectClient.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/perl/perl.min.js"></script>
 </head>
@@ -173,15 +174,11 @@
                     <div>My files:</div>
                 </div>
                 <div id="files">
-                    <div id="firstCreatedFile" class="new-element-class"><p>file1.cs</p></div>
+                    <div id="firstCreatedFile" class="new-element-class"><p>file1.c</p></div>
                 </div>
             </div>
             
-            <textarea id="code" name="code" class="code">
-                if($cool_variable) {
-                    doTheCoolThing();
-                }
-            </textarea>
+            <textarea id="code" name="code" class="code"></textarea>
             
 
             <div class="console-container">

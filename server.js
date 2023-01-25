@@ -4,10 +4,6 @@ const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 
-
-let passwordOfAdmin = "admin";
-let passwordOfViewer = "viewer";
-
 let db = new sqlite3.Database('database.sqlite', (err) => {
   if (err) {
     // Can't open database.sqlite
@@ -46,7 +42,7 @@ app.use(express.urlencoded({extended: false}));
 // создаём промежуточное ПО(функционал который встраивается в последующие функции)
 // и в самом ejs файле меняем ссылку на css файл - как будто мы уже находимся
 // в статической папке 'public'.
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 
 // отслеживание (переход) главной страницы. Функция get позволяет отслеживать
@@ -58,16 +54,17 @@ app.get('/', (req, res) => { // req - запрашиваемый маршрут 
 
 // валидация данных в регистрации (ПОТОМ СДЕЛАТЬ HTML странички вместо недоступной alert)!!!
 app.post('/validation', (req, res) => {
-  if(/^[a-zA-Z-.]+@[a-z]+\.[a-z]{2,3}$/.test(req.body.email)
-      && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/.test(req.body.password)
-      && /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/.test(req.body.login)
-      && req.body.password == req.body.passwordAgain)
-    {
-      console.log("The data was entered correctly, registration completed successfilly!");
-    } else
-    {
-      console.log('Error validation of data');
-    }
+  const { login, email, password, passwordAgain } = req.body;
+
+  const loginRegex = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
+  const emailRegex = /^[a-zA-Z-.]+@[a-z]+\.[a-z]{2,3}$/;
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/;
+
+  if (loginRegex.test(login) && emailRegex.test(email) && passwordRegex.test(password) && password === passwordAgain) {
+    res.status(200).json({ message: 'Validation successful' });
+  } else {
+    res.status(400).json({ message: 'Validation failed' });
+  }
 });
 
 
@@ -107,7 +104,7 @@ app.post('/check-user', (req, res) => {
   })
 })
 
-app.get('/:foundUser', (req, res) => {
+app.get('/:foundUser/file/1', (req, res) => {
   // Проверка аутентификации пользователя
   console.log("Обрабатываем страницу /:foundUser");
   console.log("req.params.foundUser = " + req.params.foundUser);
