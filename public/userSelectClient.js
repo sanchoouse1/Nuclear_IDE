@@ -7,6 +7,15 @@ window.onload = function() {
     console.log("usernameURL = " + usernameURL);
 
 
+    fetch(`/${usernameURL}/userSelect/files`)
+        .then(response => response.text())
+        .then(data => {
+            console.log('OKEY');
+            console.log(data);
+        })
+
+
+
     button.addEventListener("click", createNewElement);
     function createNewElement() {
         // добавление новых файлов от 2 до 10, + становление активными.
@@ -21,6 +30,7 @@ window.onload = function() {
             newP.innerHTML = '<p>NewFile.c</p>';
             newP.setAttribute("data-num", countFiles); // добавил атрибуту data-num номер файла
             //window.history.pushState({}, "", "/" + usernameURL + "/file/" + countFiles);
+
             fetch(`/${usernameURL}/file/${countFiles}`)
                     .then(response => response.text())
                     .then(data => {
@@ -28,6 +38,7 @@ window.onload = function() {
                         document.getElementById("code").value = data;
                     })
                     .catch(error => console.log(error));
+            // Нажатие на созданный файл
             newP.addEventListener("click", function(){
                 let activeButton = document.querySelector(".active");
                 activeButton.classList.remove("active");
@@ -63,5 +74,7 @@ window.onload = function() {
             })
             .catch(error => console.log(error));
     })
+
+
 }
 

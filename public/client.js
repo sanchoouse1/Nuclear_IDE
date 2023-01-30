@@ -1,8 +1,8 @@
 console.log("Работает?");
 
 
-window.onload = function() {
 
+window.onload = function() {
 
 
     // Авторизация
@@ -27,7 +27,7 @@ window.onload = function() {
                     // do something if the server returned a successful response
                     window.location.replace("/" + data.username + "/files") //redirect to userSelect
                     console.log('OK');
-                    console.log(data.username);
+                    console.log(`data.username = ${data.username}`);
                 } else {
                     // do something if the server returned an error
                     alert('Error of login or password');

@@ -46,6 +46,7 @@ let db = new sqlite3.Database('database.sqlite', (err) => {
 
 
 
+
 // устанавливаем настройку(шаблонизатор) к нашему приложению -
 // чекает папку views (там расширение .ejs)
 app.set('view engine', 'ejs');
@@ -123,11 +124,38 @@ app.get('/:foundUser/files', (req, res) => {
   console.log("req.params.foundUser = " + req.params.foundUser);
   if (req.headers.cookie && req.headers.cookie.includes(`username=${req.params.foundUser}`)) {
     console.log("прошли первый if в get'e");
-    res.render('userSelect', {foundUser: req.params.foundUser});
+    res.render('userSelect', {foundUser: req.params.foundUser, filesInDB: 2});
     } else {
     res.send('You are not authenticated');
     }
 });
+
+app.get('/:foundUser/userSelect/files', (req, res) => {
+  console.log('Вот и второй гет подъехал!');
+  let username = req.params.foundUser;
+  db.get("SELECT filesInDB FROM users WHERE username = ?", [username], (err, row) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      const fileData = JSON.parse(row.filesInDB);
+      const count = Object.values(fileData).filter(file => file.content.trim() !== '').length;
+      console.log(`Number of non-empty files: ${count}`);
+      res.status(200).send(count.toString());
+    }
+  });
+})
+
+
+
+
+/*
+
+// подсчёт количества непустых файлов из БД
+
+
+
+*/
+
 
 
 
