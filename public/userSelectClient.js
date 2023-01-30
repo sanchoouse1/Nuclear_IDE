@@ -6,6 +6,7 @@ window.onload = function() {
     let countFiles = 2;
     console.log("usernameURL = " + usernameURL);
 
+
     button.addEventListener("click", createNewElement);
     function createNewElement() {
         // добавление новых файлов от 2 до 10, + становление активными.
@@ -17,14 +18,16 @@ window.onload = function() {
             newP.setAttribute("id", "createdFile");
             newP.setAttribute("class", "new-element-class")
             newP.classList.add("active");
-            newP.innerHTML = `<p>file${countFiles}.c</p>`;
+            newP.innerHTML = '<p>NewFile.c</p>';
             newP.setAttribute("data-num", countFiles); // добавил атрибуту data-num номер файла
             //window.history.pushState({}, "", "/" + usernameURL + "/file/" + countFiles);
             fetch(`/${usernameURL}/file/${countFiles}`)
-                    .then(response => response.json())
+                    .then(response => response.text())
                     .then(data => {
-                        console.log("data = " + data);
+                        console.log(`data = ${data}`);
+                        document.getElementById("code").value = data;
                     })
+                    .catch(error => console.log(error));
             newP.addEventListener("click", function(){
                 let activeButton = document.querySelector(".active");
                 activeButton.classList.remove("active");
@@ -32,10 +35,12 @@ window.onload = function() {
                 let num = this.getAttribute("data-num"); // взял значение атрибута data-num и присвоили переменной
                 //window.history.pushState({}, "", "/" + usernameURL + "/file/" + num); // переадресация без перезагрузки страницы
                 fetch(`/${usernameURL}/file/${num}`)
-                    .then(response => response.json())
+                    .then(response => response.text())
                     .then(data => {
-                        console.log("data = " + data);
+                        console.log(`data = ${data}`);
+                        document.getElementById("code").value = data;
                     })
+                    .catch(error => console.log(error));
             });
             let parentNode = document.getElementById("files");
             parentNode.appendChild(newP);
@@ -51,10 +56,12 @@ window.onload = function() {
         firstCreatedFile.classList.add("active");
         //window.history.pushState({}, "", "/" + usernameURL + "/file/1");
         fetch(`/${usernameURL}/file/${num}`)
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
-                console.log("data = " + data);
+                console.log(`data = ${data}`);
+                document.getElementById("code").value = data;
             })
+            .catch(error => console.log(error));
     })
 }
 

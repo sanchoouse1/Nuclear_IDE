@@ -4,13 +4,26 @@ const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 
+const filesInDB = {
+  1: { name: '1', content: '' },
+  2: { name: '2', content: 'Hello' },
+  3: { name: '3', content: 'world' },
+  4: { name: '4', content: '!!!!!!!!' },
+  5: { name: '5', content: '' },
+  6: { name: '6', content: '' },
+  7: { name: '7', content: '' },
+  8: { name: '8', content: '' },
+  9: { name: '9', content: '' },
+  10: { name: '10', content: '' }
+}
+
 let db = new sqlite3.Database('database.sqlite', (err) => {
   if (err) {
     // Can't open database.sqlite
     console.log(err.message);
     throw err;
   } else {
-    db.run(`CREATE TABLE users (username TEXT, password TEXT)`, (err) => {
+    db.run(`CREATE TABLE users (username TEXT, password TEXT, filesInDB JSON)`, (err) => {
       if (err) {
         // Таблица уже создана
         console.log("Возможно таблица уже создана");
@@ -18,12 +31,12 @@ let db = new sqlite3.Database('database.sqlite', (err) => {
         // хеширование пароля для безопасности (возможно пригодится в будущем)
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash("admin", salt, function(err,hash) {
-            db.run("INSERT INTO users VALUES ('admin',?)", [hash]);
+            db.run("INSERT INTO users VALUES ('admin',?, ?)", [hash, JSON.stringify(filesInDB)]);
           })
         })
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash("viewer", salt, function(err,hash) {
-            db.run("INSERT INTO users VALUES ('viewer',?)", [hash]);
+            db.run("INSERT INTO users VALUES ('viewer',?, ?)", [hash, JSON.stringify(filesInDB)]);
           })
         })
       }
@@ -106,7 +119,7 @@ app.post('/check-user', (req, res) => {
 
 app.get('/:foundUser/files', (req, res) => {
   // Проверка аутентификации пользователя
-  console.log("Обрабатываем страницу /:foundUser");
+  console.log("Происходит проверка аутентификации пользователя");
   console.log("req.params.foundUser = " + req.params.foundUser);
   if (req.headers.cookie && req.headers.cookie.includes(`username=${req.params.foundUser}`)) {
     console.log("прошли первый if в get'e");
@@ -123,9 +136,23 @@ app.get('/:something', (req, res) => {
   res.send('No such page was found');
 });
 
+
+// Сбор данных из БД, для выгрузки кода в <textarea>
 app.get('/:foundUser/file/:num', (req, res) => {
-  console.log("textarea для " + req.params.foundUser + " связана s файлом N. " + req.params.num);
-  res.status(200).send('Ok');
+  let username = req.params.foundUser;
+  let fileNumber = req.params.num;
+  console.log("textarea для " + username + " связана s файлом N. " + fileNumber);
+  db.get("SELECT filesInDB FROM users WHERE username = ?", [username], (err, row) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      const fileData = JSON.parse(row.filesInDB);
+      const keys = Object.keys(fileData);
+      //console.log(`номер файла: ${keys[fileNumber - 1]}, содержимое: ${fileData[fileNumber].content}`);
+      res.status(200).send(fileData[keys[fileNumber - 1]].content);
+    }
+  });
+  //реализовать возвращение клиенту и добавление в <textarea>
 })
 
 
