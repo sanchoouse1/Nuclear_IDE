@@ -112,6 +112,7 @@ a {
     border-bottom: 2.5px solid #000000;
     border-right: 1px solid #000000;
     background-color: #3B2D3D;
+
 }
 
 .MyFiles {
@@ -128,7 +129,8 @@ a {
 
 .filespart #files {
     border-bottom: 0px solid black;
-    
+    height: 870px;
+    overflow: auto;
 }
 
 .active {

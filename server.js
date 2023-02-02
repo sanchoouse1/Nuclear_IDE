@@ -3,19 +3,11 @@ const bcrypt = require('bcrypt');
 const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
+const { exec } = require("child_process");
+const fs = require('fs');
 
-const filesInDB = {
-  1: { name: '1', content: '' },
-  2: { name: '2', content: 'Hello' },
-  3: { name: '3', content: 'world' },
-  4: { name: '4', content: '!!!!!!!!' },
-  5: { name: '5', content: '' },
-  6: { name: '6', content: '' },
-  7: { name: '7', content: '' },
-  8: { name: '8', content: '' },
-  9: { name: '9', content: '' },
-  10: { name: '10', content: '' }
-}
+const filesInDB = {1: { name: '1', content: 'Текст стартового файла' }}
+// то есть изначально у меня в базе данных только один стартовый файл.
 
 let db = new sqlite3.Database('database.sqlite', (err) => {
   if (err) {
@@ -43,8 +35,6 @@ let db = new sqlite3.Database('database.sqlite', (err) => {
     });
   }
 });
-
-
 
 
 // устанавливаем настройку(шаблонизатор) к нашему приложению -
@@ -130,34 +120,6 @@ app.get('/:foundUser/files', (req, res) => {
     }
 });
 
-app.get('/:foundUser/userSelect/files', (req, res) => {
-  console.log('Вот и второй гет подъехал!');
-  let username = req.params.foundUser;
-  db.get("SELECT filesInDB FROM users WHERE username = ?", [username], (err, row) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      const fileData = JSON.parse(row.filesInDB);
-      const count = Object.values(fileData).filter(file => file.content.trim() !== '').length;
-      console.log(`Number of non-empty files: ${count}`);
-      res.status(200).send(count.toString());
-    }
-  });
-})
-
-
-
-
-/*
-
-// подсчёт количества непустых файлов из БД
-
-
-
-*/
-
-
-
 
 // Обработка несуществующих страниц
 app.get('/:something', (req, res) => {
@@ -165,23 +127,94 @@ app.get('/:something', (req, res) => {
 });
 
 
-// Сбор данных из БД, для выгрузки кода в <textarea>
+// выгрузка данных из БД
+app.get('/:foundUser/upload', function (req, res) {
+  let username = req.params.foundUser;
+  // Получение данных из базы данных
+  db.all('SELECT filesInDB FROM users WHERE username = ?', [username], function (err, rows) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+      return;
+    }
+    console.log(`rows = ${JSON.stringify(rows, null, 2)}`);
+    res.json(rows);
+  });
+});
+
+
+app.patch('/save-contentOfFile', (req, res) => {
+  const numFile = req.body.num;
+  const content = req.body.content;
+  const username = req.body.username;
+  console.log(`Сохранили файл под номером: ${numFile}`);
+  console.log(`Содержимое: ${content}`);
+  console.log(`имя пользователя: ${username}`);
+  const query = `UPDATE users SET filesInDB = JSON_REPLACE(filesInDB, '$.${numFile}', JSON_OBJECT("name", "${numFile}", "content", "${content.replace(/"/g, '""')}")) WHERE username = '${username}'`;
+  db.run(query, (error) => {
+      if (error) {
+        res.status(500).json({error: error.message});
+      } else {
+        console.log("Сохранено");
+        res.status(200).json({message: 'Content updated successfully'});
+      }
+  });
+});
+
+
+app.post('/add-file', (req, res) => {
+  const countFiles = req.body.countFiles;
+  const username = req.body.username;
+  const filesInDBNew = { [countFiles]: { name: countFiles.toString(), content: `${countFiles}` } }; // убрать потом из контента countFiles!
+  // Добавление новых данных в таблицу users
+  db.run(`INSERT INTO users (username, filesInDB) VALUES (?, ?)`, [username, JSON.stringify(filesInDBNew)], (err) => {
+    if (err) {
+      console.error(err);
+      res.send({ success: false, error: err });
+    } else {
+      console.log("создал файл в бд");
+      res.send({ success: true });
+    }
+  });
+});
+
+
+// Сбор данных из БД, для выгрузки кода в <textarea> (1, 2, 4 пункт)
 app.get('/:foundUser/file/:num', (req, res) => {
   let username = req.params.foundUser;
   let fileNumber = req.params.num;
   console.log("textarea для " + username + " связана s файлом N. " + fileNumber);
-  db.get("SELECT filesInDB FROM users WHERE username = ?", [username], (err, row) => {
+  db.all("SELECT filesInDB FROM users WHERE username = ?", [username], (err, rows) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      const fileData = JSON.parse(row.filesInDB);
-      const keys = Object.keys(fileData);
-      //console.log(`номер файла: ${keys[fileNumber - 1]}, содержимое: ${fileData[fileNumber].content}`);
-      res.status(200).send(fileData[keys[fileNumber - 1]].content);
+      let row = rows[fileNumber-1];
+      const rowObject = JSON.parse(row.filesInDB);
+      //console.log(rowObject[fileNumber].content);
+      res.status(200).send(rowObject[fileNumber].content);
     }
   });
   //реализовать возвращение клиенту и добавление в <textarea>
 })
+
+app.post("/compile", (req, res) => {
+  const code = req.body.code;
+  console.log(`Приняли это содержимое на компиляцию: ${code}`);
+  fs.writeFileSync('code.c', code);
+  exec("gcc code.c -o code", (error, stdout, stderr) => {
+    if (error) {
+      console.log(`error: ${error.message}`);
+      //res.send({error: error.message});
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      res.send({result: stderr});
+    } else {
+      console.log(`stdout: ${stdout}`);
+      res.send({result: code});
+    }
+  });
+});
 
 
 const PORT = 3000;
@@ -189,3 +222,11 @@ const PORT = 3000;
 app.listen(PORT, ()=> {
     console.log(`Server started: http://localhost:${PORT}`)
 });
+
+/*
+#include <stdio.h>
+int main() {
+  printf("Вот такие вот дела!");
+  return 0;
+}
+*/

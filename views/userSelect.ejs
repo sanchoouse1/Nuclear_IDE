@@ -172,10 +172,10 @@
             <div class="filespart">
                 <div class="MyFiles">
                     <div>My files:</div>
-                    <button type="submit">Save</button>
+                    <button id="SaveButton" type="submit">Save</button>
                 </div>
                 <div id="files">
-                    <div id="firstCreatedFile" class="new-element-class"><p>NewFile.c</p></div>
+                    <div id="firstCreatedFile" class="new-element-class"><p>FileStart.c</p></div>
                 </div>
             </div>
             
@@ -184,13 +184,11 @@
 
             <div class="console-container">
                 <div class="header-console">
-                    <a href="#" id="RUN" class="RUN"> >RUN</a>
+                    <button id="RUN" class="RUN"> >RUN</button>
                     <span class="Console">Console</span>
                 </div>
 
-                <textarea class="console" readonly>
-
-                </textarea>
+                <textarea id="output-textarea" class="console" readonly></textarea>
 
             </div>
            <!--<div class="console-container">
