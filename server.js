@@ -5,6 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const { exec } = require("child_process");
 const fs = require('fs');
+const iconv = require('iconv-lite');
 
 const filesInDB = {1: { name: '1', content: 'Текст стартового файла' }}
 // то есть изначально у меня в базе данных только один стартовый файл.
@@ -200,18 +201,21 @@ app.get('/:foundUser/file/:num', (req, res) => {
 app.post("/compile", (req, res) => {
   const code = req.body.code;
   console.log(`Приняли это содержимое на компиляцию: ${code}`);
-  fs.writeFileSync('code.c', code);
-  exec("gcc code.c -o code", (error, stdout, stderr) => {
+  fs.writeFileSync('code.py', code, { encoding: 'utf-8' });
+  process.env.PYTHONIOENCODING = 'utf-8';
+  exec("python code.py", (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
-      //res.send({error: error.message});
-    }
-    if (stderr) {
+      res.send({result: error.message});
+    } else if (stderr) {
       console.log(`stderr: ${stderr}`);
       res.send({result: stderr});
     } else {
-      console.log(`stdout: ${stdout}`);
-      res.send({result: code});
+      // res.set('Content-Type', 'text/html; charset=utf-8');
+      console.log(stdout);
+      const output = Buffer.from(stdout, 'utf-8').toString();
+      console.log(`stdout: ${output}`);
+      res.send({result: output});
     }
   });
 });

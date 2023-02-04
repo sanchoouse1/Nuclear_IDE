@@ -33,7 +33,7 @@ window.onload = function() {
                     .catch(error => console.log(error));
                 } else { // иначе, если номер файла больше 1, то:
                     const fileOfDB = document.createElement('div'); // создаём div
-                    fileOfDB.innerHTML = '<p>NewFile.c</p>'; // внутри дива абзац
+                    fileOfDB.innerHTML = '<p>NewFile.py</p>'; // внутри дива абзац
                     console.log(`file.content = ${file.content}`);
                     console.log(`проверка номера файла ${file.name}`)
                     fileOfDB.setAttribute("id", "createdFile"); // присвоили атрибут id
@@ -85,7 +85,7 @@ window.onload = function() {
             newP.setAttribute("id", "createdFile");
             newP.setAttribute("class", "new-element-class")
             newP.classList.add("active");
-            newP.innerHTML = '<p>NewFile.c</p>';
+            newP.innerHTML = '<p>NewFile.py</p>';
             newP.setAttribute("data-num", countFiles); // добавил атрибуту data-num номер файла
 
 
