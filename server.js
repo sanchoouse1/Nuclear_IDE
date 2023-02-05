@@ -201,9 +201,9 @@ app.get('/:foundUser/file/:num', (req, res) => {
 app.post("/compile", (req, res) => {
   const code = req.body.code;
   console.log(`Приняли это содержимое на компиляцию: ${code}`);
-  fs.writeFileSync('code.py', code, { encoding: 'utf-8' });
+  fs.writeFileSync('main.py', code, { encoding: 'utf-8' });
   process.env.PYTHONIOENCODING = 'utf-8';
-  exec("python code.py", (error, stdout, stderr) => {
+  exec("python main.py", (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
       res.send({result: error.message});
@@ -213,7 +213,7 @@ app.post("/compile", (req, res) => {
     } else {
       // res.set('Content-Type', 'text/html; charset=utf-8');
       console.log(stdout);
-      const output = Buffer.from(stdout, 'utf-8').toString();
+      const output = Buffer.from(stdout, 'utf-8').toString(); // удалить это
       console.log(`stdout: ${output}`);
       res.send({result: output});
     }
