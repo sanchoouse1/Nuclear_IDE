@@ -1,1 +1,1 @@
-print("Как дела?")
+print("Hy vse pabotaet");

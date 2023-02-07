@@ -165,6 +165,7 @@ app.patch('/save-contentOfFile', (req, res) => {
 
 app.post('/add-file', (req, res) => {
   const countFiles = req.body.countFiles;
+  console.log(`countFiles из /add-file равен ${countFiles}`);
   const username = req.body.username;
   const filesInDBNew = { [countFiles]: { name: countFiles.toString(), content: `${countFiles}` } }; // убрать потом из контента countFiles!
   // Добавление новых данных в таблицу users
@@ -180,23 +181,42 @@ app.post('/add-file', (req, res) => {
 });
 
 
-// Сбор данных из БД, для выгрузки кода в <textarea> (1, 2, 4 пункт)
+// Выгрузка данных конкретного файла, для выгрузки кода в <textarea> (1, 2, 4 пункт)
 app.get('/:foundUser/file/:num', (req, res) => {
   let username = req.params.foundUser;
   let fileNumber = req.params.num;
   console.log("textarea для " + username + " связана s файлом N. " + fileNumber);
-  db.all("SELECT filesInDB FROM users WHERE username = ?", [username], (err, rows) => {
+  db.all("SELECT JSON_EXTRACT(filesInDB, '$." + fileNumber + ".content') AS content FROM users WHERE username = ? AND JSON_EXTRACT(filesInDB, '$." + fileNumber + ".content') IS NOT NULL", [username], (err, rows) => {
     if (err) {
       res.status(500).send(err);
     } else {
-      let row = rows[fileNumber-1];
-      const rowObject = JSON.parse(row.filesInDB);
-      //console.log(rowObject[fileNumber].content);
-      res.status(200).send(rowObject[fileNumber].content);
+      console.log('Вы нажали на файл номер ' + fileNumber);
+      console.log(`TEST! rows json stringify = ${JSON.stringify(rows)}`);
+      let row = rows[0];
+      if (!row) {
+        res.status(404).send("File not found");
+        return;
+      }
+      rowObject = JSON.stringify(row);
+      console.log(`row = ${rowObject}`);
+      res.status(200).send(row.content);
     }
   });
-  //реализовать возвращение клиенту и добавление в <textarea>
-})
+});
+//   db.all("SELECT JSON_EXTRACT(filesInDB, '$." + fileNumber + ".content') AS content FROM users WHERE username = ?", [username], (err, rows) => {
+//     if (err) {
+//       res.status(500).send(err);
+//     } else {
+//       console.log('Вы нажали на файл номер ' + fileNumber);
+//       console.log(`TEST! rows json stringify = ${JSON.stringify(rows)}`);
+//       let row = rows[0];
+//       rowObject = JSON.stringify(row);
+//       console.log(`row = ${rowObject}`);
+//       res.status(200).send(rowObject.content);
+//     }
+//   });
+// });
+
 
 app.post("/compile", (req, res) => {
   const code = req.body.code;
@@ -219,6 +239,60 @@ app.post("/compile", (req, res) => {
     }
   });
 });
+
+// app.delete('/deleteFile', (req, res) => {
+//   let numFile = req.body.num;
+//   let username = req.body.username;
+//   db.run(`DELETE FROM users SET filesInDB = $.${numFile} WHERE username = ${username}`, (err) => {
+//     if (err) {
+//       console.log('Ошибка удаления файла');
+//       return res.json({ success: false });
+//     }
+//     db.all('SELECT filesInDB FROM users WHERE username = ?', [username], function (err, rows) {
+//       console.log(`rows = ${JSON.stringify(rows, null, 2)}`);
+//     });
+//     console.log('Файл успешно удалён');
+//     return res.json({ success: true });
+//   });
+// });
+
+
+app.delete('/deleteFile', (req, res) => {
+  const { num, username } = req.body;
+  db.run(`DELETE FROM users WHERE username = '${username}' AND JSON_EXTRACT(filesInDB, '$.${num}.name') = '${num}'`, (err) => {
+    if (err)
+    {
+      console.log('Удаление прошло некорректно');
+      res.json({ success: false});
+    } else {
+      console.log('Удаление прошло успешно!');
+      db.all('SELECT filesInDB FROM users WHERE username = ?', [username], function (err, rows) {
+        console.log(`rows = ${JSON.stringify(rows, null, 2)}`);
+      });
+      res.json({ success: true });
+    }
+  });
+});
+
+
+
+// app.delete('/deleteFile', (req, res) => {
+//   let numFile = req.body.num;
+//   let username = req.body.username;
+//   db.run(`BEGIN TRANSACTION`);
+//   db.run(`UPDATE users SET filesInDB = json_remove(filesInDB, '$.${numFile}') WHERE username='${username}'`);
+//   db.run(`COMMIT`, function(err) {
+//     if (err) {
+//       return res.json({ success: false });
+//     }
+//     db.all('SELECT filesInDB FROM users WHERE username = ?', [username], function (err, rows) {
+//             console.log(`rows = ${JSON.stringify(rows, null, 2)}`);
+//           });
+//     return res.json({ success: true });
+//   });
+// });
+
+
 
 
 const PORT = 3000;
