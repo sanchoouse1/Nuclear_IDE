@@ -7,11 +7,11 @@ window.onload = function() {
     const saveButton = document.getElementById('SaveButton');
     let createFileButton = document.getElementById('buttonCreateFile');
     const outputTextarea = document.getElementById("output-textarea");
-    let countFiles = localStorage.getItem('countFiles') || 1;
+    //let countFiles = localStorage.getItem('countFiles') || 1;
+
+
 
     console.log("usernameURL = " + usernameURL);
-
-
 
 
     // Реализация выгрузки всех файлов из БД
@@ -72,6 +72,17 @@ window.onload = function() {
 
 
 
+    let countFiles = 1;
+    fetch('/getVariableCountFiles')
+    .then(response => response.json())
+    .then(data => {
+      countFiles = data.countFilesFromClient;
+      console.log(`Перезагрузил страницу и получил countFiles равным ${countFiles}`);
+      return countFiles;
+    });
+
+
+
 
 
 
@@ -99,14 +110,26 @@ window.onload = function() {
                 headers: {
                   'Content-Type': 'application/json'
                 }
-              })
-              .then(res => res.json())
-              .then(data => {
-                localStorage.setItem('countFiles', countFiles);
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(`ОБНОВЛЯЮ ЗНАЧЕНИЕ ПЕРЕМЕННОЙ COUNTFILES и заношу её равной ${countFiles} на сервере!`);
+                //localStorage.setItem('countFiles', countFiles);
+                fetch('/updateVariableCountFiles', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                        },
+                    body: JSON.stringify({ countFiles: countFiles })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                });
                 document.getElementById("code").value = '';
                 console.log("Создал файл, " + data)
-              })
-              .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
 
 
             // Нажатие на созданный файл

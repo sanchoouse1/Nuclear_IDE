@@ -7,6 +7,9 @@ const { exec } = require("child_process");
 const fs = require('fs');
 const iconv = require('iconv-lite');
 
+
+
+
 const filesInDB = {1: { name: '1', content: 'Текст стартового файла' }}
 // то есть изначально у меня в базе данных только один стартовый файл.
 
@@ -36,6 +39,29 @@ let db = new sqlite3.Database('database.sqlite', (err) => {
     });
   }
 });
+
+
+let dbCountFiles = new sqlite3.Database('databaseCountFiles.sqlite', (err) => {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log('Connected to the databaseCountFiles SQLITE database');
+})
+
+dbCountFiles.serialize(() => {
+  dbCountFiles.run(`CREATE TABLE IF NOT EXISTS countFiles (value INTEGER)`);
+  dbCountFiles.run(`INSERT INTO countFiles (value) VALUES (1)`, function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+    console.log(`A row has been inserted with rowid ${this.lastID}`);
+  });
+});
+
+let countFilesFromClient = 1;
+
+
+
 
 
 // устанавливаем настройку(шаблонизатор) к нашему приложению -
@@ -108,6 +134,39 @@ app.post('/check-user', (req, res) => {
     }
   })
 })
+
+
+
+
+
+
+app.post('/updateVariableCountFiles', (req, res) => {
+  countFilesFromClient = req.body.countFiles;
+  dbCountFiles.run(`UPDATE countFiles SET value = ?`, countFilesFromClient, function(err) {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(`Row(s) updated: ${this.changes}`);
+  });
+  console.log("Обновляю переменную countFiles на сервере, теперь она равна " + countFilesFromClient);
+  res.send({message: 'CountFiles updated'});
+});
+
+app.get('/getVariableCountFiles', (req, res) => {
+  dbCountFiles.get(`SELECT value from countFiles`, (err, row) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    countFilesFromClient = row.value;
+    console.log('Обновил страницу, вытащил CountFiles из базы данных - и она равна ' + countFilesFromClient);
+    res.send({countFilesFromClient: countFilesFromClient});
+  });
+});
+
+
+
+
+
 
 app.get('/:foundUser/files', (req, res) => {
   // Проверка аутентификации пользователя
@@ -240,21 +299,7 @@ app.post("/compile", (req, res) => {
   });
 });
 
-// app.delete('/deleteFile', (req, res) => {
-//   let numFile = req.body.num;
-//   let username = req.body.username;
-//   db.run(`DELETE FROM users SET filesInDB = $.${numFile} WHERE username = ${username}`, (err) => {
-//     if (err) {
-//       console.log('Ошибка удаления файла');
-//       return res.json({ success: false });
-//     }
-//     db.all('SELECT filesInDB FROM users WHERE username = ?', [username], function (err, rows) {
-//       console.log(`rows = ${JSON.stringify(rows, null, 2)}`);
-//     });
-//     console.log('Файл успешно удалён');
-//     return res.json({ success: true });
-//   });
-// });
+
 
 
 app.delete('/deleteFile', (req, res) => {
@@ -276,21 +321,7 @@ app.delete('/deleteFile', (req, res) => {
 
 
 
-// app.delete('/deleteFile', (req, res) => {
-//   let numFile = req.body.num;
-//   let username = req.body.username;
-//   db.run(`BEGIN TRANSACTION`);
-//   db.run(`UPDATE users SET filesInDB = json_remove(filesInDB, '$.${numFile}') WHERE username='${username}'`);
-//   db.run(`COMMIT`, function(err) {
-//     if (err) {
-//       return res.json({ success: false });
-//     }
-//     db.all('SELECT filesInDB FROM users WHERE username = ?', [username], function (err, rows) {
-//             console.log(`rows = ${JSON.stringify(rows, null, 2)}`);
-//           });
-//     return res.json({ success: true });
-//   });
-// });
+
 
 
 
@@ -300,11 +331,3 @@ const PORT = 3000;
 app.listen(PORT, ()=> {
     console.log(`Server started: http://localhost:${PORT}`)
 });
-
-/*
-#include <stdio.h>
-int main() {
-  printf("Вот такие вот дела!");
-  return 0;
-}
-*/
