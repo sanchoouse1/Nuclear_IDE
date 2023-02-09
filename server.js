@@ -49,13 +49,19 @@ let dbCountFiles = new sqlite3.Database('databaseCountFiles.sqlite', (err) => {
 })
 
 dbCountFiles.serialize(() => {
-  dbCountFiles.run(`CREATE TABLE IF NOT EXISTS countFiles (value INTEGER)`);
-  dbCountFiles.run(`INSERT INTO countFiles (value) VALUES (1)`, function(err) {
+  dbCountFiles.run(`CREATE TABLE IF NOT EXISTS countFiles (username TEXT, value INTEGER)`);
+  dbCountFiles.run(`INSERT INTO countFiles VALUES ('admin', 1)`, function(err) {
     if (err) {
       return console.log(err.message);
     }
-    console.log(`A row has been inserted with rowid ${this.lastID}`);
+    console.log(`A row has been inserted with rowid ${this.lastID} where username = admin`);
   });
+  dbCountFiles.run(`INSERT INTO countFiles VALUES ('viewer', 1)`, function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+    console.log(`A row has been inserted with rowid ${this.lastID} where username = viewer`);
+  })
 });
 
 let countFilesFromClient = 1;
@@ -142,8 +148,10 @@ app.post('/check-user', (req, res) => {
 
 app.post('/updateVariableCountFiles', (req, res) => {
   countFilesFromClient = req.body.countFiles;
-  dbCountFiles.run(`UPDATE countFiles SET value = ?`, countFilesFromClient, function(err) {
+  let username = req.body.username;
+  dbCountFiles.run(`UPDATE countFiles SET value = ? WHERE username = '${username}'`, countFilesFromClient, function(err) {
     if (err) {
+      console.log('Проблема тут. Ошибка обновления данных в таблице countFiles');
       return console.error(err.message);
     }
     console.log(`Row(s) updated: ${this.changes}`);
@@ -152,9 +160,11 @@ app.post('/updateVariableCountFiles', (req, res) => {
   res.send({message: 'CountFiles updated'});
 });
 
-app.get('/getVariableCountFiles', (req, res) => {
-  dbCountFiles.get(`SELECT value from countFiles`, (err, row) => {
+app.get('/getVariableCountFiles/:username', (req, res) => {
+  let username = req.params.username;
+  dbCountFiles.get(`SELECT value FROM countFiles WHERE username = ?`, [username], (err, row) => {
     if (err) {
+      console.log('Проблема тут. Ошибка выборки данных из таблицы countFiles');
       return console.error(err.message);
     }
     countFilesFromClient = row.value;
@@ -262,19 +272,9 @@ app.get('/:foundUser/file/:num', (req, res) => {
     }
   });
 });
-//   db.all("SELECT JSON_EXTRACT(filesInDB, '$." + fileNumber + ".content') AS content FROM users WHERE username = ?", [username], (err, rows) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       console.log('Вы нажали на файл номер ' + fileNumber);
-//       console.log(`TEST! rows json stringify = ${JSON.stringify(rows)}`);
-//       let row = rows[0];
-//       rowObject = JSON.stringify(row);
-//       console.log(`row = ${rowObject}`);
-//       res.status(200).send(rowObject.content);
-//     }
-//   });
-// });
+
+
+
 
 
 app.post("/compile", (req, res) => {

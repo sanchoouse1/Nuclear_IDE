@@ -73,7 +73,7 @@ window.onload = function() {
 
 
     let countFiles = 1;
-    fetch('/getVariableCountFiles')
+    fetch(`/getVariableCountFiles/${usernameURL}`)
     .then(response => response.json())
     .then(data => {
       countFiles = data.countFilesFromClient;
@@ -120,7 +120,7 @@ window.onload = function() {
                     headers: {
                         'Content-Type': 'application/json'
                         },
-                    body: JSON.stringify({ countFiles: countFiles })
+                    body: JSON.stringify({ countFiles: countFiles, username: usernameURL })
                 })
                 .then(response => response.json())
                 .then(data => {
