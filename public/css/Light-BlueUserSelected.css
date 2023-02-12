@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    color: rgb(255, 226, 250);
+    color: rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -38,7 +38,7 @@ body {
     margin-left: 15px;
 }
 a {
-    color:rgb(255, 226, 250);
+    color:rgb(0, 0, 0);
 }
 
 .SIGN a:hover, .SIGN a.active {
@@ -49,13 +49,13 @@ a {
 .container-top {
     display: flex;
     justify-content: flex-end;
-    background-color: #271D28;
+    background-color: #c6eff4;
     padding: 15px;
 }
 
 .main1 {
     flex-grow: 1;
-    background-color: rgb(49, 36, 46);
+    background-color: #c6eff4;
 
 }
 
@@ -68,10 +68,10 @@ a {
 .sidebuttons-container {
     display: flex;
     text-align: center;
-    background-color: #271D28;
+    background-color: #c6eff4;
     flex: 0.5;
     flex-direction: column;
-    border-right: 2.5px solid #000000;
+    /* border-right: 2.5px solid #000000; */
 
 
 }
@@ -93,69 +93,149 @@ a {
     padding-top: 14px;
     padding-bottom: 14px;
     padding-right: 25px;
-    border: 2px solid #3B2D3D;
-    background-color: #3B2D3D;
+    border: 2px solid #c6eff4;
+    border: 2px solid #c6eff4;
+    color: rgb(0, 0, 0);
+    background-color: rgb(143, 236, 255);
     cursor: pointer;
 }
 
 #buttonCreateFile:hover {
-  background-color:  #554A56;
+  background-color:  #cefaff;
 }
 
 #buttonCreateFile:active {
-  background-color: #271D28;
+  background-color: #e5f6fb;
+}
+
+#buttonNotesIcon {
+    margin-top: 56px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-right: 25px;
+    border: 2px solid #c6eff4;
+    border: 2px solid #c6eff4;
+    color: rgb(0, 0, 0);
+    background-color: rgb(143, 236, 255);
+    cursor: pointer;
+}
+
+#buttonNotesIcon:hover {
+  background-color:  #cefaff;
+}
+
+#buttonNotesIcon:active {
+  background-color: #e5f6fb;
+}
+
+#buttonSettingsIcon {
+    margin-top: 56px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-right: 25px;
+    border: 2px solid #c6eff4;
+    border: 2px solid #c6eff4;
+    color: rgb(0, 0, 0);
+    background-color: rgb(143, 236, 255);
+    cursor: pointer;
+}
+
+#buttonSettingsIcon:hover {
+  background-color:  #cefaff;
+}
+
+#buttonSettingsIcon:active {
+  background-color: #e5f6fb;
 }
 
 .filespart {
     flex: 1.8;
-    border-top: 2.5px solid #000000;
+    /* border-top: 2.5px solid #000000;
     border-bottom: 2.5px solid #000000;
-    border-right: 1px solid #000000;
-    background-color: #3B2D3D;
+    border-right: 1px solid #000000; */
+    background-color: #e1f9fc;
 
 }
 
 .MyFiles {
-    border-bottom: 2.5px solid black;
-    border-right: 2.5px solid black;
+    /* border-bottom: 2.5px solid black;
+    border-right: 2.5px solid black; */
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 15px;
     text-align: center;
     font-size: 20px;
-    background-color: #271D28;
+    background-color: #74c5d0;
 }
 
 .filespart #files {
-    border-bottom: 0px solid black;
+    /* border-bottom: 0px solid rgb(0, 0, 0); */
     height: 870px;
     overflow: auto;
 }
 
 .active {
-    background-color: blue;
+    background-color: rgb(35, 196, 255);
   }
 
 .new-element-class {
-    border: 1px solid black;
+    border: 0.2px solid black;
     padding-left: 50px;
     cursor: pointer;
 }
 
 .new-element-class:hover {
-    background-color: #554A56;
+    background-color: #ebf8ff;
 }
+
+
 
 .code {
     flex: 4;
     text-align: left;
-    color:#6feeff;
+    color:#00cf64;
     padding: 10px 10px;
-    border-top: 2.5px solid #000000;
+    /* border-top: 2.5px solid #000000;
     border-bottom: 2.5px solid #000000;
-    border-right: 2.5px solid #000000;
-    background-color: #554A56;
+    border-right: 2.5px solid #000000; */
+    background-color: #adcdd5;
+}
+
+#highlighted-code {
+    z-index: 1;
+    position: absolute;
+    top: 0.9em;
+    letter-spacing: 0.19px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+
+#code {
+    background-color: transparent;
+    color: transparent;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    caret-color: rgb(0, 255, 4);
+  }
+
+
+
+pre {
+    display: flex;
+    position: relative;
+    font-family: monospace;
+    margin: 0px;
+    white-space: pre-wrap;
+}
+
+#Hello {
+    color: #A880FF;
 }
 
 
@@ -163,7 +243,7 @@ a {
     flex: 3;
     border-top: 2.5px solid #000000;
     border-bottom: 2.5px solid #000000;
-    background-color: #1d1a1d;
+    background-color: #b3fff0;
 }
 
 .RUN {
@@ -182,8 +262,8 @@ a {
   }
 
 .console {
-    background-color: #1d1a1d;
-    width: 469px;
+    background-color: #a7bfc5;
+    width: 650px;
     color:rgb(81, 255, 0);
     min-height: calc(100vh - 156.55px);
     /*width: 100%*/
@@ -192,10 +272,10 @@ a {
 
 .header-console {
     text-align: left;
-    border-bottom: 2.5px solid black;
+    border-bottom: 2.5px solid rgb(28, 248, 156);
     padding: 10px 15px;
     font-size: 20px;
-    background-color: #271D28;
+    background-color: #b3fff0;
 }
 
 .footer {
@@ -203,7 +283,7 @@ a {
     background-color: green;
     display: flex;
     justify-content: flex-end;
-    background-color: #271D28;
+    background-color: #c6eff4;
 
     padding: 15px;
 }
@@ -299,7 +379,7 @@ a {
     bottom: 0;
     left: 0;
     margin: auto;
-    background-color: #554A56;
+    background-color: #7ab3b7;
 }
 
 
@@ -327,7 +407,7 @@ a {
       padding: 2px 8px;
       font-size: 16px;
       color: rgb(0, 0, 0);
-      background-color: #7A6B86;
+      background-color: #8a8a8a;
       line-height: 1.5;
       transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
       cursor: pointer;
@@ -413,28 +493,30 @@ a {
 }
 
 #zatemnenie3 {
-    background-color:#1d1a1de3;
+    background-color:#1f1f1fe3;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
     display: none;
+    z-index: 998;
 }
 
 #okno3 {
+    z-index: 999;
     width: 500px;
     height: 500px;
     padding: 15px;
     border-radius: 10px;
-    color:aliceblue;
+    color:rgb(0, 0, 0);
     position:absolute;
     top: 0;
     right:0;
     bottom: 0;
     left: 0;
     margin: auto;
-    background-color: #6F6474;
+    background-color: #5edaf0;
 }
 
 #header-okno3 span {
@@ -448,10 +530,10 @@ a {
 }
 
 #header-okno3 {
-    border: 2px solid black;
+    border: 2px solid rgb(202, 252, 255);
     padding-bottom: 10px;
     margin-bottom: 10px;
-    background-color: #504954;
+    background-color: #ffffff;
     padding-top: 15px;
 }
 
@@ -503,7 +585,7 @@ a {
     right:0;
     bottom: 0;
     left: 0;
-    background-color: #554A56;
+    background-color: #b9e5ff;
 }
 
 #header-okno4 {
@@ -527,12 +609,16 @@ a {
 
 #text4 textarea {
     width: 293.5px;
-    height: 250px;
-    background-color: #7F6E8C;
-    color: white;
+    height: 235px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
 }
 #zatemnenie4:target {
     display: block;
+}
+
+#NotesSaveButton {
+    margin-left: 110px;
 }
 
 .close4 {

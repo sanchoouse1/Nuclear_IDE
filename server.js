@@ -89,6 +89,11 @@ app.get('/', (req, res) => { // req - запрашиваемый маршрут 
     res.render('index');
 });
 
+app.get('/logout', function(req, res) {
+  res.clearCookie('username');
+  res.json({ message: 'User logged out' });
+});
+
 // валидация данных в регистрации (ПОТОМ СДЕЛАТЬ HTML странички вместо недоступной alert)!!!
 app.post('/validation', (req, res) => {
   const { login, email, password, passwordAgain } = req.body;

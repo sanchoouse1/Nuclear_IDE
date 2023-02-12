@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="stylesheet" href="/css/idepage2.css">
+    <link rel="stylesheet" href="/css/LilacUserSelected.css">
+    <link rel="stylesheet" href="/css/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"></link>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/abbott.min.css"></link>
     <meta charset="UTF-8">
@@ -10,32 +11,12 @@
     <title>IDE</title>
     <script>var usernameURL = "<%= foundUser %>";</script>
     <script src="/userSelectClient.js"></script>
+    <script src="/prism.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/perl/perl.min.js"></script>
 </head>
 
 <body>
-<!--
-    <div id="zatemnenie1">
-        <div id="okno1">
-            <div id="header-okno1">
-                <span class="okno-top-text1">SIGN IN </span>
-            <a href="#" class="close1">X</a><br>
-            </div>
-            <div>
-                <p>Login:</p>
-                <input type="login">
-                <br>
-                <br>
-                <p>Password:</p>
-                <input type="password">
-            </div>
-            <div id="submit1">
-                <input type="submit">
-            </div>
-        </div>
-    </div>
--->
 
 
     <div id="zatemnenie2">
@@ -108,12 +89,9 @@
                 <span>Color Theme:</span>
                 <select size="1" name="Color Theme">
                 <option>Lilac</option>
-                <option>Light</option>
+                <option>Light-blue</option>
                 <option>Dark</option>
                 </select>
-            </div>
-            <div id="submit3">
-                <span><input type="submit"></span>
             </div>
         </div>
     </div>
@@ -125,7 +103,8 @@
                 <a href="#" class="close4">X</a><br>
             </div>
             <div id="text4">
-                <textarea></textarea>
+                <textarea id="NotesTextarea"></textarea>
+                <button id="NotesSaveButton" type="submit">Save</button>
             </div>
         </div>
     </div>
@@ -144,8 +123,8 @@
         -->
             <div class="Name">NUCLEAR</div>
             <div class="SIGN">
-                <span>Hello, <%= foundUser %>!</span>
-                <a href="">LogOut</a>
+                <span id="Hello">Hello, <%= foundUser %>!</span>
+                <a href="" id="LogOut">Log Out</a>
             </div>
 
         </div>
@@ -164,8 +143,8 @@
 
                     <div class="buttons-container">
                         <div id="buttonCreateFile">CreateNewFile</div>
-                        <div><a href="#zatemnenie4">NotesIcon</a></div>
-                        <div><a href="#zatemnenie3">SettingsIcon</a></div>
+                        <div id="buttonNotesIcon"><a href="#zatemnenie4">NotesIcon</a></div>
+                        <div id="buttonSettingsIcon"><a href="#zatemnenie3">SettingsIcon</a></div>
                     </div>
 
             </div>
@@ -175,14 +154,19 @@
                     <div>My files:</div>
                     <button id="SaveButton" type="submit">Save</button>
                     <button id="DeleteButton" type="submit">Delete</button>
+                    <button id="RenameButton" type="submit">Rename</button>
                 </div>
                 <div id="files">
                     <div id="firstCreatedFile" class="new-element-class"><p>FileStart.py</p></div>
                 </div>
             </div>
-            
-            <textarea id="code" name="code" class="code"></textarea>
-            
+
+
+            <pre id="highlighting" class="code">
+                <div id="highlighted-code"></div>
+                <textarea id="code" name="code" class="code"></textarea>
+              </pre>
+
 
             <div class="console-container">
                 <div class="header-console">

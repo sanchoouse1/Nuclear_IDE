@@ -7,8 +7,12 @@ window.onload = function() {
     const saveButton = document.getElementById('SaveButton');
     let createFileButton = document.getElementById('buttonCreateFile');
     const outputTextarea = document.getElementById("output-textarea");
+    const resultCode = document.getElementById('resultCode');
     //let countFiles = localStorage.getItem('countFiles') || 1;
-
+    const highlightedCode = document.getElementById("highlighted-code");
+    const renameBtn = document.getElementById("RenameButton");
+    const textareaNotes = document.getElementById('NotesTextarea');
+    const NotesSaveButton = document.querySelector('#NotesSaveButton');
 
 
     console.log("usernameURL = " + usernameURL);
@@ -19,6 +23,19 @@ window.onload = function() {
         .then(response => response.json())
         .then(data => {
             // Обработка полученных данных
+
+            //Установка ранее выбранной цветовой темы:
+            var select = document.querySelector("select[name='Color Theme']");
+            var selectedValue = localStorage.getItem("color-theme");
+            if (selectedValue) {
+                select.value = selectedValue;
+                var link = document.querySelector("link[rel='stylesheet']");
+                link.setAttribute("type", "text/css");
+                link.setAttribute("href", "/css/" + selectedValue + "UserSelected.css");
+            }
+            //Выгрузка текста в блокнот
+            textareaNotes.value = localStorage.getItem('notes') || '';
+
             console.log('Произошла выгрузка файлов из базы данных.')
             data.forEach(elem => { // проходим по всем JSON объектам
             const files = JSON.parse(elem.filesInDB); // парсит каждый JSON-объект в объект JavaScript.
@@ -26,12 +43,22 @@ window.onload = function() {
                 // Создание элемента <div>
                 if(file.name == 1) // если номер файла равен единице - то выгружаем содержимое только первого файла из БД
                 {
+                    const newName = localStorage.getItem(numStart);
+                    if (newName) {
+                        const element = document.querySelector(`[data-num="${numStart}"]`);
+                        element.querySelector("p").textContent = newName + ".py";
+                    }
                     console.log('происходит выгрузка первого файла: COUNTFILE = 1')
                     fetch(`/${usernameURL}/file/${numStart}`)
                     .then(response => response.text())
                     .then(data => {
                         console.log(`data = ${data}`);
-                        document.getElementById("code").value = data;
+                        textareaForCode.value = data;
+                        highlightedCode.innerHTML = Prism.highlight(
+                            textareaForCode.value,
+                            Prism.languages.python,
+                            "python"
+                            );
                     })
                     .catch(error => console.log(error));
                 } else { // иначе, если номер файла больше 1, то:
@@ -54,7 +81,12 @@ window.onload = function() {
                             .then(response => response.text())
                             .then(data => {
                                 console.log(`Нажатие на созданный файл, data = ${data}`);
-                                document.getElementById("code").value = data;
+                                textareaForCode.value = data;
+                                highlightedCode.innerHTML = Prism.highlight(
+                                    textareaForCode.value,
+                                    Prism.languages.python,
+                                    "python"
+                                    );
                             })
                             .catch(error => console.log(error));
                         });
@@ -62,12 +94,50 @@ window.onload = function() {
                     parentNode.appendChild(fileOfDB); // добавляем в хтмл
                     //countFiles++;
                     //console.log(`##################### countFiles инкремировалась и равна ${countFiles}`);
+                    const newName = localStorage.getItem(file.name);
+                    console.log(`file.name = ${file.name}`);
+                    console.log(`newName = ${newName}`);
+                    if (newName != null) {
+                        const element = document.querySelector(`[data-num="${file.name}"]`);
+                        console.log(`element = ${element}`);
+                        if (element) {
+                            element.querySelector("p").textContent = newName + ".py";
+                        }
+                    }
                 }
 
             });
         });
 
     });
+
+
+
+
+
+
+    // Добавление элемента при загрузке страницы
+    // window.addEventListener("load", function() {
+        
+    // });
+
+    textareaForCode.addEventListener("input", function() {
+        highlightedCode.innerHTML = Prism.highlight(
+          this.value,
+          Prism.languages.python,
+          "python"
+        );
+      });
+
+      function adjustHighlightedCodeSize() {
+        highlightedCode.style.width = `${textareaForCode.offsetWidth - 20}px`;
+        highlightedCode.style.height = `${textareaForCode.offsetHeight - 19}px`;
+      }
+
+    adjustHighlightedCodeSize();
+    window.addEventListener("resize", adjustHighlightedCodeSize);
+
+
 
 
 
@@ -80,8 +150,6 @@ window.onload = function() {
       console.log(`Перезагрузил страницу и получил countFiles равным ${countFiles}`);
       return countFiles;
     });
-
-
 
 
 
@@ -126,8 +194,13 @@ window.onload = function() {
                 .then(data => {
                     console.log(data.message);
                 });
-                document.getElementById("code").value = '';
+                textareaForCode.value = '';
                 console.log("Создал файл, " + data)
+                highlightedCode.innerHTML = Prism.highlight(
+                    textareaForCode.value,
+                    Prism.languages.python,
+                    "python"
+                    );
             })
             .catch(error => console.error(error));
 
@@ -143,7 +216,12 @@ window.onload = function() {
                     .then(response => response.text())
                     .then(data => {
                         console.log(`Нажатие на созданный файл, data = ${data}`);
-                        document.getElementById("code").value = data;
+                        textareaForCode.value = data;
+                        highlightedCode.innerHTML = Prism.highlight(
+                            textareaForCode.value,
+                            Prism.languages.python,
+                            "python"
+                            );
                     })
                     .catch(error => console.log(error));
             });
@@ -168,7 +246,12 @@ window.onload = function() {
             .then(response => response.text())
             .then(data => {
                 console.log(`data = ${data}`);
-                document.getElementById("code").value = data;
+                textareaForCode.value = data;
+                highlightedCode.innerHTML = Prism.highlight(
+                    textareaForCode.value,
+                    Prism.languages.python,
+                    "python"
+                    );
             })
             .catch(error => console.log(error));
     })
@@ -247,7 +330,12 @@ window.onload = function() {
                 .then(response => response.text())
                 .then(data => {
                     console.log(`data = ${data}`);
-                    document.getElementById("code").value = data;
+                    textareaForCode.value = data;
+                    highlightedCode.innerHTML = Prism.highlight(
+                        textareaForCode.value,
+                        Prism.languages.python,
+                        "python"
+                        );
                 })
                 .catch(error => console.log(error));
             } else {
@@ -255,5 +343,57 @@ window.onload = function() {
             }
         });
     }
+
+
+
+    document.getElementById("LogOut").addEventListener("click", function(event) {
+        event.preventDefault();
+        fetch(`/logout`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(data);
+            window.location.href = "/";
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      });
+
+
+
+
+      // Переименование файлов:
+    renameBtn.addEventListener("click", function() {
+        let activeButton = document.querySelector("#files .active");
+        let num = activeButton.getAttribute("data-num");
+        const newName = prompt("Enter new file name: ");
+        if (newName) {
+            activeButton.querySelector("p").textContent = newName + ".py";
+            localStorage.setItem(num, newName);
+        }
+    });
+
+
+    // Изменение цветовых тем:
+    document.querySelector("select[name='Color Theme']").addEventListener("change", function() {
+        var selectedValue = this.value;
+        localStorage.setItem("color-theme", selectedValue);
+        var link = document.querySelector("link[rel='stylesheet']");
+        link.setAttribute("type", "text/css");
+        link.setAttribute("href", "/css/" + selectedValue + "UserSelected.css");
+    });
+
+
+    // Сохранение текста из блокнота
+    NotesSaveButton.addEventListener('click', function() {
+        localStorage.setItem('notes', textareaNotes.value);
+    });
+
+
 }
 
