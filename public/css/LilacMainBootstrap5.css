@@ -1,0 +1,179 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #271D28;
+}
+
+.sidebuttons-container {
+  background-color: #271D28;
+  /* max-width: 5% !important;
+  min-width: 100px; */
+}
+
+footer {
+  background-color: #271D28;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.row, html, body {
+  height: 100%;
+}
+
+textarea {
+  height: 100%;
+}
+
+.console-container {
+  height: 95%;
+}
+
+.d-block {
+  min-width: 70px;
+  max-width: 90px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .col-md-4 {
+  width: 100% !important;
+} */
+/* .row {
+  width: 100% !important;
+} */
+
+header .container {
+  margin-right: 0%;
+}
+
+.row {
+  background-color: #3B2D3D;
+  color: white;
+}
+
+#code {
+  background-color: #554A56;
+}
+
+.col-md-5 {
+  background-color: #554A56;
+  padding: 0% !important;
+}
+
+.console {
+  background-color: black !important;
+}
+
+header h1 {
+  color: rgb(163, 1, 199);
+}
+
+.filespart {
+  flex: 1.8;
+  /* border-top: 2.5px solid #000000;
+  border-bottom: 2.5px solid #000000;
+  border-right: 1px solid #000000; */
+  background-color: #3B2D3D;
+
+}
+
+.MyFiles {
+  border: 2.5px solid black;
+  /* border-right: 2.5px solid black; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
+  background-color: #271D28;
+}
+
+.filespart #files {
+  border-bottom: 0px solid black;
+  height: 870px;
+  overflow: auto;
+}
+
+.new-element-class {
+padding-left: 50px;
+cursor: pointer;
+border: 1px solid black;
+}
+
+.col-md-2 {
+padding: 0% !important;
+}
+
+.code, .console {
+border: none !important;
+color: white !important;
+font-size: small !important;
+}
+
+.col-md-4 {
+padding: 0% !important;
+}
+
+.header-console {
+padding-right: 10px;
+border: 1.5px solid black;
+}
+
+p {
+padding-top: 12px;
+}
+
+.authentication {
+background-color: #554A56 !important;
+}
+
+.authentication>.modal-body {
+background-color: #D9D9D9;
+}
+
+.authentication h5 {
+color: white;
+}
+
+.btn-close.close-red {
+color: #fff;
+background-color: #dc3545;
+border-color: #dc3545;
+}
+
+.settings {
+background-color: #554A56 !important;
+}
+
+.settings>.modal-body {
+background-color: #D9D9D9;
+}
+
+.settings h5 {
+color: white;
+}
+
+.notes>.modal-header {
+background-color: #443b45 !important;
+color: white;
+}
+
+.notes>.modal-body {
+background-color: #D9D9D9;
+}
+
+.notes>.modal-footer {
+background-color: #c5c5c5;
+}

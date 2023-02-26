@@ -41,7 +41,7 @@ window.onload = function() {
     const formValidation = document.querySelector('.js-form');
     const loginInputValidation = document.querySelector('input[name="login"]');
     const emailInputValidation = document.querySelector('input[name="email"]');
-    const passwordInputValidation = document.querySelector('input[name="password"]');
+    const passwordInputValidation = document.querySelector('input[name="passwordValidation"]');
     const passwordAgainInputValidation = document.querySelector('input[name="passwordAgain"]');
 
     formValidation.addEventListener('submit', event => {
@@ -50,6 +50,7 @@ window.onload = function() {
         const email = emailInputValidation.value;
         const password = passwordInputValidation.value;
         const passwordAgain = passwordAgainInputValidation.value;
+        console.log("валидация проходит");
 
         fetch('/validation', {
             method: 'POST',

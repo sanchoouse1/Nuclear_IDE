@@ -200,7 +200,7 @@ a {
     z-index: 1;
     position: absolute;
     top: 0.9em;
-    letter-spacing: 0.19px;
+    letter-spacing: 0.09px;
     overflow-y: auto;
     overflow-x: hidden;
     word-wrap: break-word;

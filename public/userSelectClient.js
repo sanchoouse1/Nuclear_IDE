@@ -12,7 +12,7 @@ window.onload = function() {
     const highlightedCode = document.getElementById("highlighted-code");
     const renameBtn = document.getElementById("RenameButton");
     const textareaNotes = document.getElementById('NotesTextarea');
-    const NotesSaveButton = document.querySelector('#NotesSaveButton');
+    const notesSaveButton = document.querySelector('#NotesSaveButton');
 
 
     console.log("usernameURL = " + usernameURL);
@@ -31,7 +31,7 @@ window.onload = function() {
                 select.value = selectedValue;
                 var link = document.querySelector("link[rel='stylesheet']");
                 link.setAttribute("type", "text/css");
-                link.setAttribute("href", "/css/" + selectedValue + "UserSelected.css");
+                link.setAttribute("href", "/css/" + selectedValue + "UserSelectedBootstrap5.css");
             }
             //Выгрузка текста в блокнот
             textareaNotes.value = localStorage.getItem('notes') || '';
@@ -74,6 +74,7 @@ window.onload = function() {
                     fileOfDB.addEventListener("click", function(){
                         outputTextarea.value = "";
                         let activeButton = document.querySelector(".active");
+                        console.log(activeButton.innerHTML);
                         activeButton.classList.remove("active");
                         this.classList.add("active");
                         let num = this.getAttribute("data-num"); // взял значение атрибута data-num и присвоили переменной
@@ -130,7 +131,7 @@ window.onload = function() {
       });
 
       function adjustHighlightedCodeSize() {
-        highlightedCode.style.width = `${textareaForCode.offsetWidth - 20}px`;
+        highlightedCode.style.width = `${textareaForCode.offsetWidth - 18}px`;
         highlightedCode.style.height = `${textareaForCode.offsetHeight - 19}px`;
       }
 
@@ -385,12 +386,12 @@ window.onload = function() {
         localStorage.setItem("color-theme", selectedValue);
         var link = document.querySelector("link[rel='stylesheet']");
         link.setAttribute("type", "text/css");
-        link.setAttribute("href", "/css/" + selectedValue + "UserSelected.css");
+        link.setAttribute("href", "/css/" + selectedValue + "UserSelectedBootstrap5.css");
     });
 
 
     // Сохранение текста из блокнота
-    NotesSaveButton.addEventListener('click', function() {
+    notesSaveButton.addEventListener('click', function() {
         localStorage.setItem('notes', textareaNotes.value);
     });
 
